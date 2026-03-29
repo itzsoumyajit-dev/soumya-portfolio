@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_mmrvdmycJKVgYzYrsoeRSQwjUctG",
+  "orgId": "team_Q3kyqY1vwGtHWCVUi1GAVc0g",
+  "projectName": "soumya-portfolio",
+  "settings": {
+    "createdAt": 1774812557364,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}

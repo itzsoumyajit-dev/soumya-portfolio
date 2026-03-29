@@ -1,0 +1,23 @@
+Retrieving project…
+Deploying itzsoumyajit-devs-projects/soumya-portfolio
+Uploading [--------------------] (0.0B/76B)
+Uploading [====================] (76.0B/76B)
+Inspect: https://vercel.com/itzsoumyajit-devs-projects/soumya-portfolio/G4Wrev2CAa65QgrSmtKgJ4EMDVWQ [3s]
+Production: https://soumya-portfolio-pp7a6wp6l-itzsoumyajit-devs-projects.vercel.app [3s]
+https://soumya-portfolio-pp7a6wp6l-itzsoumyajit-devs-projects.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Previous build caches not available.
+Building: Downloading 54 deployment files...
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.1
+Building: Installing dependencies...
+Building: added 117 packages in 4s
+Building: 10 packages are looking for funding
+Building: run `npm fund` for details
+Building: Running "npm run build"
+Building: > rc-portfolio@1.0.0 build
+Building: > tsc && vite build
+Error: Command "npm run build" exited with 1
