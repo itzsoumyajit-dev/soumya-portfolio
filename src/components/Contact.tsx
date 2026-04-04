@@ -42,14 +42,14 @@ export default function Contact() {
             lineHeight: 0.9, color: 'var(--text)',
             letterSpacing: '0.03em', marginBottom: '2rem',
           }}>
-            LET'S BUILD<br/>
+            LET'S BUILD<br />
             <span style={{
               background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}>
               SOMETHING
-            </span><br/>
+            </span><br />
             GREAT
           </h2>
 
@@ -91,11 +91,11 @@ export default function Contact() {
           flexWrap: 'wrap', alignItems: 'center',
         }}>
           {[
-            { label: 'GITHUB',    href: '#' },
-            { label: 'LINKEDIN',  href: '#' },
-            { label: 'X',         href: '#' },
+            { label: 'GITHUB', href: '#' },
+            { label: 'LINKEDIN', href: '#' },
+            { label: 'X', href: '#' },
             { label: 'INSTAGRAM', href: '#' },
-            { label: 'RESUME',    href: '#' },
+            { label: 'RESUME', href: '#' },
           ].map(s => (
             <a key={s.label} href={s.href} data-cursor
               className="contact-link"

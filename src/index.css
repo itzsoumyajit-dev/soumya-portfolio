@@ -18,15 +18,15 @@
   --c4: #34d399;
   --c5: #fb923c;
 
-  --lg-bg:        #181e36;
-  --lg-bg-h:      #1f2641;
-  --lg-border:    transparent;
-  --lg-border-h:  transparent;
-  --lg-inset-top: inset 4px 4px 12px rgba(255,255,255,0.06), inset 0px 1px 2px rgba(255,255,255,0.1);
-  --lg-inset-bot: inset -4px -4px 12px rgba(0,0,0,0.5);
-  --lg-shadow:    12px 12px 24px rgba(0,0,0,0.45), var(--lg-inset-top), var(--lg-inset-bot);
-  --lg-shadow-h:  16px 16px 32px rgba(0,0,0,0.6), var(--lg-inset-top), var(--lg-inset-bot);
-  --lg-blur:      none;
+  --lg-bg:        rgba(24, 30, 54, 0.65);
+  --lg-bg-h:      rgba(31, 38, 65, 0.85);
+  --lg-border:    rgba(255, 255, 255, 0.05);
+  --lg-border-h:  rgba(255, 255, 255, 0.1);
+  --lg-inset-top: inset 2px 2px 8px rgba(255,255,255,0.05);
+  --lg-inset-bot: inset -2px -2px 8px rgba(0,0,0,0.3);
+  --lg-shadow:    12px 12px 24px rgba(0,0,0,0.35), var(--lg-inset-top), var(--lg-inset-bot);
+  --lg-shadow-h:  16px 16px 32px rgba(0,0,0,0.5), var(--lg-inset-top), var(--lg-inset-bot);
+  --lg-blur:      blur(18px) saturate(160%);
 
   --particle-opacity: 0.9;
   --grain-opacity: 0.20;
@@ -52,15 +52,15 @@
   --c4: #047857;
   --c5: #c2410c;
 
-  --lg-bg:        #e2ecfd;
-  --lg-bg-h:      #eaeffc;
-  --lg-border:    transparent;
-  --lg-border-h:  transparent;
-  --lg-inset-top: inset 6px 6px 16px rgba(255,255,255,1), inset 0px 2px 4px rgba(255,255,255,0.8);
-  --lg-inset-bot: inset -6px -6px 16px rgba(180,195,220,0.6);
-  --lg-shadow:    14px 14px 28px rgba(175,190,215,0.45), -6px -6px 14px rgba(255,255,255,0.8), var(--lg-inset-top), var(--lg-inset-bot);
-  --lg-shadow-h:  20px 20px 40px rgba(175,190,215,0.6), -8px -8px 20px rgba(255,255,255,1), var(--lg-inset-top), var(--lg-inset-bot);
-  --lg-blur:      none;
+  --lg-bg:        rgba(255, 255, 255, 0.5);
+  --lg-bg-h:      rgba(255, 255, 255, 0.75);
+  --lg-border:    rgba(255, 255, 255, 0.4);
+  --lg-border-h:  rgba(255, 255, 255, 0.7);
+  --lg-inset-top: inset 1px 1px 4px rgba(255,255,255,0.6);
+  --lg-inset-bot: inset -1px -1px 4px rgba(0,0,0,0.04);
+  --lg-shadow:    10px 10px 24px rgba(0,0,0,0.05), var(--lg-inset-top), var(--lg-inset-bot);
+  --lg-shadow-h:  14px 14px 32px rgba(0,0,0,0.08), 0 0 24px rgba(255,255,255,0.4), var(--lg-inset-top), var(--lg-inset-bot);
+  --lg-blur:      blur(18px) saturate(160%);
 
   --particle-opacity: 0.45;
   --grain-opacity: 0.05;
@@ -150,6 +150,31 @@ body {
 }
 
 /* ════════════════════════════════════
+   MAGNETIC INTERACTIVE ELEMENTS
+════════════════════════════════════ */
+.magnetic {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.magnetic:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+.magnetic::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(56,189,248,0.06), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.magnetic:hover::after {
+  opacity: 1;
+}
+
+/* ════════════════════════════════════
    THEME TOGGLE BUTTON
 ════════════════════════════════════ */
 .theme-toggle {
@@ -195,7 +220,8 @@ body {
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9999;
   mix-blend-mode: difference;
-  transition: transform 0.05s;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.08s;
+  box-shadow: 0 0 8px rgba(56,189,248,0.3);
 }
 #cursor-ring {
   width: 34px; height: 34px;
@@ -203,7 +229,10 @@ body {
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9998;
-  transition: width 0.22s, height 0.22s, border-color 0.22s;
+  transition: width 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              height 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              border-color 0.25s,
+              border-width 0.2s;
   backdrop-filter: blur(2px);
 }
 
@@ -282,6 +311,30 @@ body::after {
 }
 
 /* ════════════════════════════════════
+   REPO MODAL STYLES
+════════════════════════════════════ */
+.repo-modal-overlay {
+  animation: modal-overlay-in 0.35s ease both;
+}
+
+.repo-modal-card::-webkit-scrollbar {
+  width: 3px;
+}
+.repo-modal-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+.repo-modal-card::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--c1), var(--c2));
+  border-radius: 2px;
+}
+
+[data-theme="light"] .repo-modal-card {
+  background: rgba(226,236,253,0.95) !important;
+  border-color: rgba(3,105,161,0.15) !important;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.2), 0 0 80px rgba(3,105,161,0.05), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+
+/* ════════════════════════════════════
    KEYFRAMES
 ════════════════════════════════════ */
 @keyframes drift {
@@ -300,6 +353,18 @@ body::after {
 @keyframes toggle-pop{ 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
 @keyframes gradient-rotate { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 @keyframes glow-pulse { 0%,100%{filter:drop-shadow(0 0 6px rgba(56,189,248,0.3))} 50%{filter:drop-shadow(0 0 18px rgba(56,189,248,0.5))} }
+
+/* New: modal overlay entrance */
+@keyframes modal-overlay-in {
+  from { backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); }
+  to   { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+}
+
+/* New: cursor trail particle fade */
+@keyframes trail-fade {
+  0%   { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.2); }
+}
 
 /* ════════════════════════════════════
    HELPERS
@@ -345,6 +410,7 @@ body::after {
   #cursor, #cursor-ring { display: none; }
   nav   { padding: 0.65rem 1rem !important; }
   section { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .repo-modal-card { padding: 1.5rem !important; }
 }
 @media (max-width: 768px) {
   .two-col-lg { grid-template-columns: 1fr !important; }

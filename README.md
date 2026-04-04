@@ -83,6 +83,7 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 | 📊 | **Live GitHub Stats** | Stars, forks, followers — fetched fresh from GitHub API on every visit |
 | 🃏 | **Repo Cards** | Top repositories sorted by stars with language badges |
 | 🥧 | **Language Chart** | Interactive Recharts donut chart showing your tech stack breakdown |
+| 📜 | **Certificates Showcase** | Interactive 3D tilt cards displaying professional certifications |
 | 🖱️ | **Custom Cursor** | Smooth magnetic cursor with animated hover ring |
 | 🎞️ | **Scroll Animations** | `ScrollReveal` with directional fade-in transitions |
 | 🌀 | **Smooth Scroll** | Powered by `Lenis` for silky physics-based scrolling |
@@ -143,6 +144,7 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 │   │
 │   ├── 📂 components/
 │   │   ├── 🎯  About.jsx             # About section — skills, timeline & fun facts
+│   │   ├── 📜  Certificates.tsx      # Digital certificates showcase with 3D tilt animations
 │   │   ├── 📬  Contact.jsx           # Contact section with animated social links
 │   │   ├── 🔻  Footer.jsx            # Footer with social icons
 │   │   ├── 📊  GitHubStats.jsx       # Live GitHub stat cards (stars, forks, etc.)

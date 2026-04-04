@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.vercel/
+git_status_output.txt
+git_status_output2.txt
+build_log_cmd.txt
+build_log.txt
+build_error.txt
+postcss.config.js
+tailwind.config.js

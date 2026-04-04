@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-const links = ['ABOUT', 'WORK', 'CONTACT']
+const links = ['ABOUT', 'WORK', 'CERTIFICATES', 'CONTACT']
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null)

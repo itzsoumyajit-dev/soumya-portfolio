@@ -9,32 +9,216 @@ import GitHubStats from './components/GitHubStats'
 import RepoGrid from './components/RepoGrid'
 import LanguageChart from './components/LanguageChart'
 import Contact from './components/Contact'
+import Certificates from './components/Certificates'
 import Footer from './components/Footer'
 import ParticleBackground from './components/ParticleBackground'
 import ScrollReveal from './components/ScrollReveal'
+import LiquidBackground from './components/LiquidBackground'
 
-function Cursor() {
-  const dot  = useRef(null)
+/* ═══════════════════════════════════════════
+   PREMIUM MAGNETIC CURSOR WITH TRAIL
+═══════════════════════════════════════════ */
+function MagneticCursor() {
+  const dot = useRef(null)
   const ring = useRef(null)
+  const trailCanvas = useRef(null)
+  const mouseRef = useRef({ x: 0, y: 0, rx: 0, ry: 0 })
+  const trailPoints = useRef([])
+  const isHovering = useRef(false)
+  const isClicking = useRef(false)
+
   useEffect(() => {
-    let mx=0,my=0,rx=0,ry=0,raf
+    const canvas = trailCanvas.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+
+    let W = window.innerWidth
+    let H = window.innerHeight
+    canvas.width = W
+    canvas.height = H
+    let raf
+
+    const TRAIL_LENGTH = 22
+    const TRAIL_COLORS = [
+      'rgba(56,189,248,', // sky
+      'rgba(167,139,250,', // violet
+      'rgba(244,114,182,', // pink
+      'rgba(52,211,153,',  // emerald
+    ]
+
+    const onResize = () => {
+      W = window.innerWidth; H = window.innerHeight
+      canvas.width = W; canvas.height = H
+    }
+    window.addEventListener('resize', onResize)
+
     const move = (e) => {
-      mx=e.clientX; my=e.clientY
-      if(dot.current) dot.current.style.transform=`translate(${mx-5}px,${my-5}px)`
+      mouseRef.current.x = e.clientX
+      mouseRef.current.y = e.clientY
+
+      // Add trail point
+      trailPoints.current.push({
+        x: e.clientX, y: e.clientY,
+        life: 1, size: Math.random() * 3 + 1.5,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5 - 0.5,
+        color: TRAIL_COLORS[Math.floor(Math.random() * TRAIL_COLORS.length)],
+      })
+      if (trailPoints.current.length > 80) trailPoints.current.shift()
+
+      // Move dot instantly
+      if (dot.current) {
+        dot.current.style.transform = `translate(${e.clientX - 5}px,${e.clientY - 5}px)`
+      }
     }
+
+    const onMouseDown = () => {
+      isClicking.current = true
+      if (ring.current) {
+        ring.current.style.width = '22px'
+        ring.current.style.height = '22px'
+        ring.current.style.borderColor = 'rgba(56,189,248,0.8)'
+        ring.current.style.borderWidth = '2.5px'
+      }
+      if (dot.current) {
+        dot.current.style.transform = `translate(${mouseRef.current.x - 5}px,${mouseRef.current.y - 5}px) scale(0.6)`
+      }
+      // Burst particles on click
+      for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8
+        trailPoints.current.push({
+          x: mouseRef.current.x, y: mouseRef.current.y,
+          life: 1, size: Math.random() * 4 + 2,
+          vx: Math.cos(angle) * (2 + Math.random() * 2),
+          vy: Math.sin(angle) * (2 + Math.random() * 2),
+          color: TRAIL_COLORS[Math.floor(Math.random() * TRAIL_COLORS.length)],
+        })
+      }
+    }
+
+    const onMouseUp = () => {
+      isClicking.current = false
+      if (ring.current) {
+        ring.current.style.width = isHovering.current ? '52px' : '34px'
+        ring.current.style.height = isHovering.current ? '52px' : '34px'
+        ring.current.style.borderColor = isHovering.current ? 'rgba(56,189,248,0.65)' : 'rgba(56,189,248,0.4)'
+        ring.current.style.borderWidth = '1.5px'
+      }
+      if (dot.current) {
+        dot.current.style.transform = `translate(${mouseRef.current.x - 5}px,${mouseRef.current.y - 5}px) scale(1)`
+      }
+    }
+
+    window.addEventListener('mousemove', move)
+    window.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mouseup', onMouseUp)
+
+    // Magnetic + hover effects on interactive elements
+    const grow = () => {
+      isHovering.current = true
+      if (ring.current && !isClicking.current) {
+        ring.current.style.width = '52px'
+        ring.current.style.height = '52px'
+        ring.current.style.borderColor = 'rgba(56,189,248,0.65)'
+      }
+      if (dot.current) {
+        dot.current.style.background = 'var(--c2)'
+        dot.current.style.boxShadow = '0 0 12px rgba(167,139,250,0.6)'
+      }
+    }
+    const shrink = () => {
+      isHovering.current = false
+      if (ring.current && !isClicking.current) {
+        ring.current.style.width = '34px'
+        ring.current.style.height = '34px'
+        ring.current.style.borderColor = 'rgba(56,189,248,0.4)'
+      }
+      if (dot.current) {
+        dot.current.style.background = 'var(--c1)'
+        dot.current.style.boxShadow = 'none'
+      }
+    }
+
+    const interactiveEls = document.querySelectorAll('a,button,[role="button"],.lg-hover,.glow-border')
+    interactiveEls.forEach(el => {
+      el.addEventListener('mouseenter', grow)
+      el.addEventListener('mouseleave', shrink)
+    })
+
+    // Animation loop
     const animate = () => {
-      rx += (mx-rx)*0.11; ry += (my-ry)*0.11
-      if(ring.current) ring.current.style.transform=`translate(${rx-17}px,${ry-17}px)`
-      raf=requestAnimationFrame(animate)
+      const m = mouseRef.current
+      m.rx += (m.x - m.rx) * 0.1
+      m.ry += (m.y - m.ry) * 0.1
+
+      if (ring.current) {
+        const ringW = parseFloat(ring.current.style.width || 34)
+        ring.current.style.transform = `translate(${m.rx - ringW / 2}px,${m.ry - ringW / 2}px)`
+      }
+
+      // Draw trail particles
+      ctx.clearRect(0, 0, W, H)
+      const points = trailPoints.current
+      for (let i = points.length - 1; i >= 0; i--) {
+        const p = points[i]
+        p.x += p.vx
+        p.y += p.vy
+        p.vy += 0.02 // gravity
+        p.vx *= 0.98 // friction
+        p.life -= 0.025
+
+        if (p.life <= 0) {
+          points.splice(i, 1)
+          continue
+        }
+
+        const alpha = p.life * 0.6
+        // Glow
+        ctx.save()
+        ctx.globalAlpha = alpha * 0.4
+        ctx.fillStyle = `${p.color}1)`
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2)
+        ctx.fill()
+        // Core
+        ctx.globalAlpha = alpha
+        ctx.fillStyle = `${p.color}1)`
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.restore()
+      }
+
+      raf = requestAnimationFrame(animate)
     }
-    window.addEventListener('mousemove',move)
-    raf=requestAnimationFrame(animate)
-    const grow   = () => { if(ring.current){ring.current.style.width='52px';ring.current.style.height='52px';ring.current.style.borderColor='rgba(56,189,248,0.65)'} }
-    const shrink = () => { if(ring.current){ring.current.style.width='34px';ring.current.style.height='34px';ring.current.style.borderColor='rgba(56,189,248,0.45)'} }
-    document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',grow);el.addEventListener('mouseleave',shrink)})
-    return ()=>{ window.removeEventListener('mousemove',move); cancelAnimationFrame(raf) }
-  },[])
-  return (<><div id="cursor" ref={dot}/><div id="cursor-ring" ref={ring}/></>)
+    raf = requestAnimationFrame(animate)
+
+    return () => {
+      window.removeEventListener('mousemove', move)
+      window.removeEventListener('mousedown', onMouseDown)
+      window.removeEventListener('mouseup', onMouseUp)
+      window.removeEventListener('resize', onResize)
+      cancelAnimationFrame(raf)
+      interactiveEls.forEach(el => {
+        el.removeEventListener('mouseenter', grow)
+        el.removeEventListener('mouseleave', shrink)
+      })
+    }
+  }, [])
+
+  return (
+    <>
+      <canvas
+        ref={trailCanvas}
+        style={{
+          position: 'fixed', inset: 0, width: '100%', height: '100%',
+          zIndex: 9997, pointerEvents: 'none',
+        }}
+      />
+      <div id="cursor" ref={dot} />
+      <div id="cursor-ring" ref={ring} />
+    </>
+  )
 }
 
 /* ═══════════════════════════════════════════
@@ -213,16 +397,10 @@ export default function App() {
           opacity: showLoading ? 0 : 1,
           transition: 'opacity 0.8s 0.2s ease',
         }}>
-          <Cursor/>
+          <MagneticCursor/>
           <ParticleBackground theme={theme}/>
 
-          {/* Aurora blobs */}
-          <div className="aurora">
-            <div className="aurora-blob"/>
-            <div className="aurora-blob"/>
-            <div className="aurora-blob"/>
-            <div className="aurora-blob"/>
-          </div>
+          <LiquidBackground />
 
           <Navbar theme={theme} toggleTheme={toggle}/>
 
@@ -245,6 +423,10 @@ export default function App() {
 
             <ScrollReveal direction="left" delay={0.1} duration={0.9} distance={50}>
               <LanguageChart languages={languages}/>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={0.1} duration={0.9} distance={45}>
+              <Certificates />
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={0.1} duration={0.9} distance={45}>

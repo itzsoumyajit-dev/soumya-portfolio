@@ -25,7 +25,6 @@ export function useGitHub() {
         ])
         setProfile(profileRes.data)
         const sorted = reposRes.data
-          .filter(r => !r.fork)
           .sort((a, b) => b.stargazers_count - a.stargazers_count)
         setRepos(sorted)
         const langMap = {}
