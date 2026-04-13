@@ -1,211 +1,217 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-export default function HeroScene3D() {
-  const mountRef = useRef(null)
+export default function HeroScene3D({ scrollProgress = 0 }) {
+  const containerRef = useRef(null)
+  const sceneRef = useRef(null)
 
   useEffect(() => {
-    const container = mountRef.current
-    if (!container) return
-
-    // Respect reduced motion
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const isMobile = window.innerWidth < 768
+    if (!containerRef.current) return
 
     // Scene setup
     const scene = new THREE.Scene()
-    const W = container.clientWidth
-    const H = container.clientHeight
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.z = 5
 
-    const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 100)
-    camera.position.z = 7
-    camera.position.x = 1.2
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile })
-    renderer.setSize(W, H)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2))
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setClearColor(0x000000, 0)
-    container.appendChild(renderer.domElement)
+    containerRef.current.appendChild(renderer.domElement)
 
-    // Colors matching portfolio palette
-    const C1 = new THREE.Color('#38bdf8') // sky
-    const C2 = new THREE.Color('#a78bfa') // violet
-    const C3 = new THREE.Color('#f472b6') // pink
-    const C4 = new THREE.Color('#34d399') // emerald
+    // Create main Group holding the loaded model
+    const mesh = new THREE.Group()
+    scene.add(mesh)
 
-    // ── Main TorusKnot ──
-    const torusGeo = new THREE.TorusKnotGeometry(1.0, 0.3, isMobile ? 64 : 128, isMobile ? 8 : 24)
-    const torusMat = new THREE.MeshBasicMaterial({
-      color: C1,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.1,
-    })
-    const torusKnot = new THREE.Mesh(torusGeo, torusMat)
-    scene.add(torusKnot)
+    // Load Damascus Steel Katana GLB
+    const loader = new GLTFLoader()
+    loader.load('/damascus_steel_katana.glb', (gltf) => {
+      const model = gltf.scene
 
-    // Inner glow mesh (solid, very transparent)
-    const glowMat = new THREE.MeshBasicMaterial({
-      color: C2,
-      transparent: true,
-      opacity: 0.02,
-      side: THREE.DoubleSide,
-    })
-    const glowMesh = new THREE.Mesh(torusGeo, glowMat)
-    scene.add(glowMesh)
+      // Center the model
+      const box = new THREE.Box3().setFromObject(model)
+      const center = box.getCenter(new THREE.Vector3())
+      // Shift model so it rotates around its true center
+      model.position.sub(center)
 
-    // ── Orbiting Icosahedrons ──
-    const orbiters = []
-    const orbiterCount = isMobile ? 3 : 6
-    const orbiterColors = [C1, C2, C3, C4, C1, C3]
-    for (let i = 0; i < orbiterCount; i++) {
-      const size = 0.08 + Math.random() * 0.12
-      const geo = new THREE.IcosahedronGeometry(size, 0)
-      const mat = new THREE.MeshBasicMaterial({
-        color: orbiterColors[i % orbiterColors.length],
-        wireframe: true,
-        transparent: true,
-        opacity: 0.25,
-      })
-      const mesh = new THREE.Mesh(geo, mat)
-
-      // Orbit parameters
-      const orbit = {
-        mesh,
-        radius: 2.2 + Math.random() * 1.2,
-        speed: 0.3 + Math.random() * 0.5,
-        phase: (Math.PI * 2 * i) / orbiterCount + Math.random() * 0.5,
-        tilt: Math.random() * Math.PI * 0.5,
-        rotSpeed: 0.5 + Math.random() * 1.5,
+      // Scale model roughly to fit the view (target massive 12 units width for StringTune look)
+      const size = box.getSize(new THREE.Vector3())
+      const maxDim = Math.max(size.x, size.y, size.z)
+      if (maxDim > 0 && maxDim < 10000) {
+        const scale = 12.0 / maxDim
+        model.scale.setScalar(scale)
+      } else {
+        model.scale.setScalar(1)
       }
-      orbiters.push(orbit)
-      scene.add(mesh)
-    }
 
-    // ── Floating particles ──
-    const particleCount = isMobile ? 30 : 80
-    const particleGeo = new THREE.BufferGeometry()
-    const particlePositions = new Float32Array(particleCount * 3)
-    const particleSizes = new Float32Array(particleCount)
-    for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 10
-      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 10
-      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 6
-      particleSizes[i] = Math.random() * 3 + 1
-    }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
-    particleGeo.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1))
-    const particleMat = new THREE.PointsMaterial({
-      color: C1,
-      size: 0.03,
-      transparent: true,
-      opacity: 0.4,
-      sizeAttenuation: true,
+      // Fix PBR materials that appear black without an environment map
+      model.traverse((child) => {
+        if (child.isMesh && child.material) {
+          // Clone material to avoid modifying shared defaults
+          child.material = child.material.clone()
+          if (child.material.metalness !== undefined) {
+            // Cap metalness and ensure roughness so it catches light
+            child.material.metalness = Math.min(child.material.metalness, 0.5)
+            child.material.roughness = Math.max(child.material.roughness, 0.3)
+          }
+          // Optional: Add slight emissive pop if the texture is very dark
+          child.material.emissive = new THREE.Color(0x111111)
+          child.material.needsUpdate = true
+        }
+      })
+
+      // StringTune-style starting angle (slanted up-right, leaning forward)
+      model.rotation.z = Math.PI / 5
+      model.rotation.x = Math.PI / 6
+      model.rotation.y = -Math.PI / 8
+
+      mesh.add(model)
+    }, undefined, (error) => {
+      console.error('Error loading Katana GLB:', error)
     })
-    const particles = new THREE.Points(particleGeo, particleMat)
-    scene.add(particles)
 
-    // ── Mouse tracking ──
-    const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 }
-    const onMouseMove = (e) => {
-      mouse.targetX = (e.clientX / window.innerWidth) * 2 - 1
-      mouse.targetY = -(e.clientY / window.innerHeight) * 2 + 1
+    // Mock wireMesh to safely plug into existing animation logic
+    const wireMesh = new THREE.Group()
+
+    // Enhanced Lights to make the model pop without an HDRI
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
+    scene.add(ambientLight)
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5)
+    scene.add(hemiLight)
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5)
+    directionalLight.position.set(5, 10, 7)
+    scene.add(directionalLight)
+
+    const pointLight = new THREE.PointLight(0xe63946, 3.0, 20)
+    pointLight.position.set(-3, 2, 3)
+    scene.add(pointLight)
+
+    const pointLight2 = new THREE.PointLight(0x3366ff, 2.0, 15)
+    pointLight2.position.set(3, -2, -2)
+    scene.add(pointLight2)
+
+    // Store references for scroll-driven updates
+    const scrollTarget = { value: scrollProgress }
+    const smoothScroll = { value: scrollProgress }
+    sceneRef.current = { scene, camera, renderer, mesh, wireMesh, pointLight, scrollTarget }
+
+    // Mouse tracking for StringTune style hover parallax
+    const mouse = new THREE.Vector2(0, 0)
+    const smoothMouse = new THREE.Vector2(0, 0)
+
+    const onMouseMove = (event) => {
+      // Normalize mouse coordinates (-1 to +1)
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
     }
     window.addEventListener('mousemove', onMouseMove)
 
-    // ── Animation ──
-    const clock = new THREE.Clock()
-    let animId
+    let raf
+    const baseTime = Date.now()
 
-    function animate() {
-      animId = requestAnimationFrame(animate)
-      const t = clock.getElapsedTime()
-      const speed = prefersReduced ? 0.15 : 1
+    const animate = () => {
+      const elapsed = (Date.now() - baseTime) * 0.001
 
-      // Smooth mouse interpolation
-      mouse.x += (mouse.targetX - mouse.x) * 0.04
-      mouse.y += (mouse.targetY - mouse.y) * 0.04
+      // Linear Interpolation (lerp) for buttery parallax smoothness
+      smoothMouse.lerp(mouse, 0.08)
+      // Custom Scroll lerping for "weighty" cinematic flow
+      smoothScroll.value = THREE.MathUtils.lerp(smoothScroll.value, scrollTarget.value, 0.06)
+      const currentScroll = smoothScroll.value
 
-      // Main torusKnot rotation + mouse tilt
-      torusKnot.rotation.x = t * 0.12 * speed + mouse.y * 0.3
-      torusKnot.rotation.y = t * 0.18 * speed + mouse.x * 0.3
-      torusKnot.rotation.z = t * 0.06 * speed
+      // Flowing/floating ambient animation - Cinematic float
+      const floatY = Math.sin(elapsed * 0.8) * 0.3
+      const floatX = Math.cos(elapsed * 0.6) * 0.15
+      const floatZ = Math.sin(elapsed * 0.7) * 0.2
 
-      // Pulse opacity
-      torusMat.opacity = 0.08 + Math.sin(t * 0.8) * 0.04
-      glowMat.opacity = 0.015 + Math.sin(t * 0.5) * 0.01
+      // Cinematic Center Anchor
+      const basePosX = 0.0
+      const basePosY = 1.0
+      const basePosZ = 0.0
 
-      // Glow mesh follows with slight lag
-      glowMesh.rotation.copy(torusKnot.rotation)
-      glowMesh.rotation.x += 0.1
-      glowMesh.rotation.y += 0.15
+      // Cinematic sweeping on scroll
+      const scrollShiftX = currentScroll * -2.5
+      const scrollShiftY = currentScroll * -1.0
+      const scrollShiftZ = currentScroll * -2.5
 
-      // Orbiting icosahedrons
-      orbiters.forEach((o) => {
-        const angle = t * o.speed * speed + o.phase
-        o.mesh.position.x = Math.cos(angle) * o.radius
-        o.mesh.position.y = Math.sin(angle) * o.radius * Math.cos(o.tilt)
-        o.mesh.position.z = Math.sin(angle) * o.radius * Math.sin(o.tilt) * 0.5
-        o.mesh.rotation.x = t * o.rotSpeed * speed
-        o.mesh.rotation.y = t * o.rotSpeed * 0.7 * speed
-      })
+      // Combined Position: Base + Parallax + Cinematic Float + Sweeping
+      mesh.position.x = basePosX + floatX + smoothMouse.x * 1.2 + scrollShiftX
+      mesh.position.y = basePosY + floatY + smoothMouse.y * 1.2 + scrollShiftY
+      mesh.position.z = basePosZ + floatZ + scrollShiftZ
 
-      // Particles gentle drift
-      const posArr = particles.geometry.attributes.position.array
-      for (let i = 0; i < particleCount; i++) {
-        posArr[i * 3 + 1] += Math.sin(t + i) * 0.001
-        posArr[i * 3] += Math.cos(t * 0.5 + i * 0.3) * 0.0005
-      }
-      particles.geometry.attributes.position.needsUpdate = true
-      particles.rotation.y = t * 0.02 * speed
+      // Cinematic Sweep Rotation 
+      const scrollTwistZ = currentScroll * Math.PI * 1.5
+      const scrollTwistY = currentScroll * -Math.PI * 0.8
+      const scrollTwistX = currentScroll * Math.PI * 0.4
 
-      // Color cycling
-      const hue = (t * 0.05) % 1
-      torusMat.color.setHSL(hue * 0.15 + 0.55, 0.8, 0.65)
+      // Combined Rotation: Majestic spin + organic wobble + Mouse + Scroll sweep
+      mesh.rotation.x = Math.sin(elapsed * 0.4) * 0.15 - smoothMouse.y * 0.6 + scrollTwistX
+      mesh.rotation.y = elapsed * 0.3 + smoothMouse.x * 0.8 + scrollTwistY
+      mesh.rotation.z = Math.cos(elapsed * 0.3) * 0.1 + scrollTwistZ
+
+      wireMesh.position.copy(mesh.position)
+      wireMesh.rotation.copy(mesh.rotation)
+
+      // Keep camera and scale fixed
+      camera.position.z = 5
+      camera.position.y = 0
+
+      const sc = 1
+      mesh.scale.setScalar(sc)
+      wireMesh.scale.setScalar(sc)
 
       renderer.render(scene, camera)
+      raf = requestAnimationFrame(animate)
     }
-    animate()
+    raf = requestAnimationFrame(animate)
 
-    // ── Resize ──
-    const onResize = () => {
-      const w = container.clientWidth
-      const h = container.clientHeight
-      camera.aspect = w / h
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight
       camera.updateProjectionMatrix()
-      renderer.setSize(w, h)
+      renderer.setSize(window.innerWidth, window.innerHeight)
     }
-    window.addEventListener('resize', onResize)
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      cancelAnimationFrame(animId)
+      cancelAnimationFrame(raf)
       window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('resize', onResize)
-      renderer.dispose()
-      torusGeo.dispose()
-      torusMat.dispose()
-      glowMat.dispose()
-      particleGeo.dispose()
-      particleMat.dispose()
-      orbiters.forEach((o) => {
-        o.mesh.geometry.dispose()
-        o.mesh.material.dispose()
-      })
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement)
+      window.removeEventListener('resize', handleResize)
+      if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
+        containerRef.current.removeChild(renderer.domElement)
       }
+      mesh.traverse((child) => {
+        if (child.isMesh && child.geometry) {
+          child.geometry.dispose()
+        }
+        if (child.isMesh && child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m) => m.dispose())
+          } else {
+            child.material.dispose()
+          }
+        }
+      })
+      renderer.dispose()
     }
   }, [])
 
+  // Update target when parent changes scrollProgress
+  useEffect(() => {
+    if (!sceneRef.current) return
+    sceneRef.current.scrollTarget.value = scrollProgress
+  }, [scrollProgress])
+
   return (
     <div
-      ref={mountRef}
+      ref={containerRef}
       style={{
+        width: '100%',
+        height: '100%',
         position: 'absolute',
         inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
+        opacity: 0.6,
       }}
     />
   )

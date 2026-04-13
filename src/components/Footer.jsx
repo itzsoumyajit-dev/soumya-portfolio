@@ -20,57 +20,62 @@ const USERNAME = import.meta.env.VITE_GITHUB_USERNAME
 
 export default function Footer() {
   return (
-    <footer style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Top glow */}
+    <footer style={{ position: 'relative', background: '#050505', overflow: 'hidden' }}>
+      {/* Top accent line */}
       <div style={{
         position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
-        width: '60%', height: '1px',
-        background: 'linear-gradient(90deg, transparent, rgba(56,189,248,0.4), rgba(167,139,250,0.4), transparent)',
-      }}/>
-      <div style={{
-        position: 'absolute', top: -60, left: '50%', transform: 'translateX(-50%)',
-        width: 400, height: 120,
-        background: 'radial-gradient(ellipse, rgba(56,189,248,0.06), transparent 70%)',
-        pointerEvents: 'none',
-      }}/>
+        width: '40%', height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(230,57,70,0.4), transparent)',
+      }} />
 
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 2rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2.5rem 2rem' }}>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          flexWrap: 'wrap', gap: '1rem',
+        }}>
           {/* Left — logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
             <div style={{
               width: 34, height: 34, borderRadius: '10px',
-              background: 'linear-gradient(135deg, var(--c1), var(--c2))',
+              background: 'var(--accent)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: 'var(--font-mono)', color: '#04060f', fontWeight: 700, fontSize: '0.78rem',
-              boxShadow: '0 4px 16px rgba(56,189,248,0.3)',
+              fontSize: '0.9rem',
             }}>
-              {(USERNAME || 'SP').slice(0,2).toUpperCase()}
+              ⚡
             </div>
-            <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--muted)', fontSize: '0.72rem' }}>
-              Built with <FiHeart size={10} style={{ color:'#f472b6', display:'inline', verticalAlign:'middle' }}/> by {USERNAME}
+            <span style={{
+              fontFamily: 'var(--font-mono)', color: '#6B6B6B', fontSize: '0.72rem',
+            }}>
+              Built with <FiHeart size={10} style={{ color: 'var(--accent)', display: 'inline', verticalAlign: 'middle' }} /> by {USERNAME}
             </span>
           </div>
 
           {/* Right — socials */}
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             {[
-              { href: `https://github.com/${USERNAME}`, icon: <FiGithub size={13}/>, label: 'GitHub', hoverColor: '#e2e8f0' },
-              { href: 'https://x.com/ItzSoumyajit', icon: <XIcon/>, label: 'X', hoverColor: '#e2e8f0' },
-              { href: 'https://www.linkedin.com/in/itz-soumyajit-soumyajit-saha-413a79337', icon: <LIIcon/>, label: 'LinkedIn', hoverColor: '#0a66c2' },
-              { href: 'https://www.instagram.com/soumyajit.saha07/', icon: <IGIcon/>, label: 'Instagram', hoverColor: '#e1306c' },
-            ].map(({ href, icon, label, hoverColor }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer"
-                title={label}
-                className="lg-pill"
+              { href: `https://github.com/${USERNAME}`, icon: <FiGithub size={13}/>, label: 'GitHub' },
+              { href: 'https://x.com/ItzSoumyajit', icon: <XIcon/>, label: 'X' },
+              { href: 'https://www.linkedin.com/in/itz-soumyajit-soumyajit-saha-413a79337', icon: <LIIcon/>, label: 'LinkedIn' },
+              { href: 'https://www.instagram.com/soumyajit.saha07/', icon: <IGIcon/>, label: 'Instagram' },
+            ].map(({ href, icon, label }) => (
+              <a key={label} href={href} target="_blank" rel="noreferrer" title={label}
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 34, height: 34, borderRadius: '10px',
-                  color: 'var(--muted)', textDecoration: 'none',
-                  transition: 'all 0.22s ease',
+                  width: 34, height: 34, borderRadius: '50%',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#6B6B6B', textDecoration: 'none',
+                  transition: 'all 0.22s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.color = hoverColor; e.currentTarget.style.transform='translateY(-2px)' }}
-                onMouseLeave={e => { e.currentTarget.style.color='var(--muted)'; e.currentTarget.style.transform='none' }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.color = 'var(--accent)'
+                  e.currentTarget.style.borderColor = 'rgba(230,57,70,0.3)'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.color = '#6B6B6B'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.transform = 'none'
+                }}
               >
                 {icon}
               </a>
@@ -78,14 +83,16 @@ export default function Footer() {
           </div>
         </div>
 
-        <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem',
-          borderTop: '1px solid rgba(255,255,255,0.06)',
+        <div style={{
+          marginTop: '1.5rem', paddingTop: '1rem',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          flexWrap: 'wrap', gap: '0.5rem' }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'rgba(90,106,138,0.6)' }}>
+          flexWrap: 'wrap', gap: '0.5rem',
+        }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: '#3A3A3A' }}>
             Powered by GitHub API · React + Vite · Data refreshes on every visit
           </p>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'rgba(90,106,138,0.45)' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: '#2A2A2A' }}>
             © {new Date().getFullYear()} {USERNAME}
           </p>
         </div>

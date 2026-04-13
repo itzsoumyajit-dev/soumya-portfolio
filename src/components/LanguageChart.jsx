@@ -1,117 +1,97 @@
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
+import { useRef, useState, useEffect } from 'react'
 import { SectionTitle } from './GitHubStats'
-import { useState } from 'react'
 
-const PALETTE = [
-  { color:'#38bdf8', glow:'rgba(56,189,248,0.3)' },
-  { color:'#a78bfa', glow:'rgba(167,139,250,0.3)' },
-  { color:'#f472b6', glow:'rgba(244,114,182,0.3)' },
-  { color:'#fbbf24', glow:'rgba(251,191,36,0.3)'  },
-  { color:'#34d399', glow:'rgba(52,211,153,0.3)'  },
-  { color:'#fb923c', glow:'rgba(251,146,60,0.3)'  },
-  { color:'#e879f9', glow:'rgba(232,121,249,0.3)' },
-  { color:'#a3e635', glow:'rgba(163,230,53,0.3)'  },
-]
+const LC = {
+  JavaScript:'#f7df1e',TypeScript:'#3178c6',Python:'#3572A5',Rust:'#dea584',
+  Go:'#00ADD8',CSS:'#563d7c',HTML:'#e34c26',Java:'#b07219','C++':'#f34b7d',
+  Ruby:'#701516',Shell:'#89e051',Vue:'#41b883',Svelte:'#ff3e00',Kotlin:'#7f52ff',
+  Swift:'#f05138',Dart:'#00B4AB',PHP:'#777BB4','C#':'#178600',
+}
 
-const CustomTooltip = ({ active, payload }) => {
-  if (!active || !payload?.length) return null
-  const { name, value } = payload[0].payload
-  return (
-    <div className="lg" style={{
-      borderRadius:'12px', padding:'0.7rem 1rem',
-      fontFamily:'var(--font-mono)', fontSize:'0.76rem',
-    }}>
-      <div style={{ color:'var(--c1)', marginBottom:'0.2rem' }}>{name}</div>
-      <div style={{ color:'var(--muted)' }}>{value} repos</div>
-    </div>
-  )
+function useInView(threshold = 0.1) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true) },
+      { threshold }
+    )
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [])
+  return [ref, visible]
 }
 
 export default function LanguageChart({ languages }) {
-  const [activeIdx, setActiveIdx] = useState(null)
+  const [sectionRef, sectionVisible] = useInView()
+  const total = Object.values(languages).reduce((a,b) => a+b, 0)
+  if (!total) return null
 
-  const data = Object.entries(languages)
-    .sort((a,b) => b[1]-a[1]).slice(0,8)
-    .map(([name,value]) => ({ name, value }))
-  const total = data.reduce((s,d) => s+d.value, 0)
+  const sorted = Object.entries(languages)
+    .sort(([,a],[,b]) => b - a)
+    .slice(0, 8)
 
   return (
-    <section id="languages" style={{ padding:'4rem 2rem 6rem', maxWidth:'1100px', margin:'0 auto' }}>
-      <SectionTitle tag="// tech stack" title="Languages & Tools"
-        subtitle="Distribution across all public repositories." />
+    <section id="languages" className="st-section st-section-dark" style={{ paddingTop: '2rem' }}>
+      <div className="st-section-content">
+        <div ref={sectionRef} style={{
+          opacity: sectionVisible ? 1 : 0,
+          transform: sectionVisible ? 'translateY(0)' : 'translateY(40px)',
+          transition: 'all 0.8s cubic-bezier(0.16,1,0.3,1)',
+        }}>
+          <p className="st-mono-label" style={{ marginBottom: '1rem' }}>// languages</p>
+          <h3 style={{
+            fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+            fontWeight: 900,
+            letterSpacing: '-0.02em',
+            marginBottom: '2.5rem',
+          }}>
+            Code <span className="st-accent-text">Distribution</span>
+          </h3>
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1.5rem' }}
-        className="two-col-lg">
-
-        {/* Donut */}
-        <div className="lg" style={{ borderRadius:'22px', padding:'2rem', position:'relative' }}>
-          <ResponsiveContainer width="100%" height={270}>
-            <PieChart>
-              <Pie data={data} cx="50%" cy="50%"
-                innerRadius={72} outerRadius={108} paddingAngle={3} dataKey="value"
-                onMouseEnter={(_,i) => setActiveIdx(i)}
-                onMouseLeave={() => setActiveIdx(null)}
-                strokeWidth={0}
-              >
-                {data.map((_,i) => (
-                  <Cell key={i} fill={PALETTE[i%PALETTE.length].color}
-                    opacity={activeIdx===null||activeIdx===i ? 1 : 0.35}
-                    style={{ cursor:'pointer', outline:'none',
-                      filter: activeIdx===i ? `drop-shadow(0 0 10px ${PALETTE[i%PALETTE.length].glow})` : 'none',
-                      transition:'all 0.2s' }}
-                  />
-                ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip/>}/>
-            </PieChart>
-          </ResponsiveContainer>
-          <div style={{ position:'absolute', top:'50%', left:'50%',
-            transform:'translate(-50%,-50%)', textAlign:'center', pointerEvents:'none' }}>
-            <div style={{ fontSize:'2rem', fontWeight:900, color:'var(--text)',
-              fontFamily:'var(--font-mono)', lineHeight:1 }}>
-              {activeIdx!==null ? data[activeIdx]?.value : total}
-            </div>
-            <div style={{ fontSize:'0.62rem', color:'var(--muted)',
-              fontFamily:'var(--font-mono)', letterSpacing:'0.08em', marginTop:'0.2rem' }}>
-              {activeIdx!==null ? data[activeIdx]?.name.toUpperCase() : 'TOTAL'}
-            </div>
-          </div>
-        </div>
-
-        {/* Bars */}
-        <div className="lg" style={{ borderRadius:'22px', padding:'2rem',
-          display:'flex', flexDirection:'column', gap:'1rem' }}>
-          {data.map(({ name, value }, i) => {
-            const pct = Math.round((value/total)*100)
-            const { color } = PALETTE[i%PALETTE.length]
-            return (
-              <div key={name}
-                onMouseEnter={() => setActiveIdx(i)}
-                onMouseLeave={() => setActiveIdx(null)}
-                style={{ cursor:'pointer' }}
-              >
-                <div style={{ display:'flex', justifyContent:'space-between', marginBottom:'0.35rem' }}>
-                  <span style={{ fontSize:'0.81rem', fontWeight:600,
-                    color: activeIdx===i ? 'var(--text)' : 'var(--muted2)', transition:'color 0.2s',
-                    display:'flex', alignItems:'center', gap:'0.45rem' }}>
-                    <span style={{ width:8, height:8, borderRadius:'50%',
-                      background:color, display:'inline-block', flexShrink:0 }}/>
-                    {name}
-                  </span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'0.73rem', color }}>{pct}%</span>
-                </div>
-                <div style={{ height:'4px', borderRadius:'100px',
-                  background:'rgba(255,255,255,0.06)', overflow:'hidden' }}>
+          {/* Language bars */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {sorted.map(([lang, bytes], i) => {
+              const pct = ((bytes / total) * 100).toFixed(1)
+              const color = LC[lang] || '#6B6B6B'
+              return (
+                <div key={lang} style={{
+                  animation: sectionVisible ? `fadeUp 0.5s ${i * 0.08}s cubic-bezier(0.16,1,0.3,1) both` : 'none',
+                }}>
                   <div style={{
-                    height:'100%', borderRadius:'100px', width:`${pct}%`,
-                    background:`linear-gradient(90deg, ${color}, ${color}88)`,
-                    transition:'width 0.65s cubic-bezier(0.16,1,0.3,1)',
-                    boxShadow: activeIdx===i ? `0 0 10px ${color}` : 'none',
-                  }}/>
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    marginBottom: '0.4rem',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div style={{
+                        width: 10, height: 10, borderRadius: '50%',
+                        background: color, flexShrink: 0,
+                      }} />
+                      <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{lang}</span>
+                    </div>
+                    <span style={{
+                      fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#6B6B6B',
+                    }}>
+                      {pct}%
+                    </span>
+                  </div>
+                  <div style={{
+                    width: '100%', height: '4px',
+                    background: 'rgba(255,255,255,0.06)',
+                    borderRadius: '4px', overflow: 'hidden',
+                  }}>
+                    <div style={{
+                      height: '100%',
+                      width: sectionVisible ? `${pct}%` : '0%',
+                      background: color,
+                      borderRadius: '4px',
+                      transition: `width 1s ${i * 0.1}s cubic-bezier(0.16,1,0.3,1)`,
+                    }} />
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fiddle-digital/string-tune": "^1.1.55",
     "@types/three": "^0.162.0",
     "axios": "^1.14.0",
     "framer-motion": "^12.38.0",

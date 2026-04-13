@@ -1,222 +1,217 @@
-import { useEffect, useState } from 'react'
-import { FiMapPin, FiUsers, FiBookOpen, FiArrowDown, FiLink } from 'react-icons/fi'
+import { useEffect, useState, useRef } from 'react'
+import { FiArrowDown, FiMapPin, FiUsers, FiBookOpen, FiFileText } from 'react-icons/fi'
 import HeroScene3D from './HeroScene3D'
-import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function Hero({ profile }) {
-  const [typed, setTyped] = useState('')
+  const [scrollY, setScrollY] = useState(0)
+  const sectionRef = useRef(null)
 
   useEffect(() => {
-    let i = 0
-    const txt = '> Crafting beautiful things on the web.'
-    const iv  = setInterval(() => {
-      setTyped(txt.slice(0, ++i))
-      if (i >= txt.length) clearInterval(iv)
-    }, 55)
-    return () => clearInterval(iv)
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  // Parallax for background elements
-  const { scrollY } = useScroll()
-  const yHeroBg = useTransform(scrollY, [0, 1000], [0, 200])
-  const opacityHeroBg = useTransform(scrollY, [0, 500], [1, 0])
 
   if (!profile) return null
 
-  // Framer Motion variants for orchestrated entrance
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 }
-    }
-  }
+  const vh = typeof window !== 'undefined' ? window.innerHeight : 800
+  const progress = Math.min(scrollY / (vh * 2), 1) // 0 to 1 over 2vh of scroll
 
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 70, damping: 15 } }
-  }
+  // Parallax values
+  const titleOpacity = Math.max(1 - progress * 2.5, 0)
+  const titleY = progress * -80
+  const subtitleOpacity = Math.max(1 - progress * 3, 0)
+  const nameOpacity = progress < 0.2 ? 0 : Math.min((progress - 0.2) * 3, 1)
+  const nameScale = 0.85 + nameOpacity * 0.15
+  const infoOpacity = progress < 0.4 ? 0 : Math.min((progress - 0.4) * 3, 1)
+  const scrollHintOpacity = Math.max(1 - progress * 5, 0)
 
   return (
-    <section id="home" style={{
-      minHeight: '100vh', display: 'flex', alignItems: 'center',
-      justifyContent: 'center', padding: '7rem 2rem 5rem',
-      position: 'relative', overflow: 'hidden',
-    }}>
-      {/* Grid Parallax */}
-      <motion.div className="grid-bg" style={{ position:'absolute', inset:0, pointerEvents:'none', y: yHeroBg, opacity: opacityHeroBg }} />
+    <section id="home" ref={sectionRef} className="st-hero">
+      <div className="st-hero-sticky">
+        {/* 3D Background */}
+        <div className="hero-3d-container">
+          <HeroScene3D scrollProgress={progress} />
+        </div>
 
-      {/* 3D Scene behind content */}
-      <motion.div style={{ position:'absolute', inset:0, y: yHeroBg }}>
-        <HeroScene3D />
-      </motion.div>
+        {/* Phase 1: Large intro text */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 2,
+          opacity: titleOpacity,
+          transform: `translateY(${titleY}px)`,
+          transition: 'none',
+          pointerEvents: titleOpacity < 0.1 ? 'none' : 'auto',
+        }}>
+          <p className="st-mono-label" style={{ marginBottom: '2rem', letterSpacing: '0.2em' }}>
+            PORTFOLIO · {new Date().getFullYear()}
+          </p>
+          <h1 className="hero-title">
+            Master<br />
+            Your <span className="hero-accent">Code</span>
+          </h1>
+          <p className="hero-subtitle" style={{
+            opacity: subtitleOpacity,
+          }}>
+            Crafting beautiful things on the web
+          </p>
+        </div>
 
-      {/* Center glow */}
-      <div style={{
-        position:'absolute', top:'38%', left:'50%', transform:'translate(-50%,-50%)',
-        width:560, height:560,
-        background:'radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 68%)',
-        pointerEvents:'none',
-      }}/>
-
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        animate="show"
-        style={{ maxWidth:'940px', width:'100%', position:'relative', zIndex: 1 }}
-      >
-        {/* Badge */}
-        <motion.div variants={item} style={{ display:'inline-flex', alignItems:'center', gap:'0.55rem',
-          marginBottom:'2.2rem' }}>
-          <div className="lg lg-pill" style={{ borderRadius:'100px', padding:'0.38rem 1.1rem',
-            display:'flex', alignItems:'center', gap:'0.55rem' }}>
-            <span style={{ width:7, height:7, borderRadius:'50%', background:'var(--c4)',
-              animation:'pulse-glow 2.2s ease infinite', flexShrink:0 }} />
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'0.7rem', color:'var(--c4)',
-              letterSpacing:'0.1em' }}>OPEN TO WORK</span>
-          </div>
-        </motion.div>
-
-        {/* Layout */}
-        <div style={{ display:'flex', gap:'2.5rem', alignItems:'center',
-          flexWrap:'wrap-reverse', marginBottom:'2rem' }}>
-
-          {/* Text */}
-          <div style={{ flex:1, minWidth:'260px' }}>
-            <motion.p variants={item} style={{ fontFamily:'var(--font-mono)', color:'var(--muted)',
-              fontSize:'0.73rem', letterSpacing:'0.04em', marginBottom:'0.85rem' }}>
-              {typed}<span style={{ animation:'blink 1s infinite', color:'var(--c1)', marginLeft:1 }}>|</span>
-
-              {' '}@{profile.login}
-            </motion.p>
-
-            {/* Animated Name */}
-            <motion.h1 variants={item} style={{ fontSize:'clamp(2.5rem,7vw,5.2rem)', fontWeight:900,
-              lineHeight:1, letterSpacing:'-0.035em', color:'var(--text)', marginBottom:'0.6rem',
-              textShadow:'0 0 60px rgba(56,189,248,0.15)' }}>
-              <span className="grad-text glow-text">{profile.name || profile.login}</span>
-            </motion.h1>
-            
-            <motion.div variants={item} style={{ display:'flex', alignItems:'center', gap:'0.8rem', marginBottom:'1.8rem' }}>
-              <div style={{ width:32, height:2, background:'linear-gradient(90deg,var(--c1),var(--c2))', borderRadius:2 }}/>
-              <span style={{ fontFamily:'var(--font-mono)', color:'var(--c1)', fontSize:'0.78rem',
-                letterSpacing:'0.08em', fontWeight:500 }}>
-                Full Stack Developer
-              </span>
-            </motion.div>
-
-            {profile.bio && (
-              <motion.p variants={item} style={{ color:'var(--muted2)', fontSize:'1rem', lineHeight:1.78,
-                maxWidth:'480px', marginBottom:'2rem' }}>
-                {profile.bio}
-              </motion.p>
-            )}
-
-            {/* Meta */}
-            <motion.div variants={item} style={{ display:'flex', flexWrap:'wrap', gap:'1rem',
-              marginBottom:'2.5rem' }}>
-              {[
-                profile.location && { icon: FiMapPin, text: profile.location },
-                { icon: FiUsers,    text: `${profile.followers} followers` },
-                { icon: FiBookOpen, text: `${profile.public_repos} repos` },
-                profile.blog && { icon: FiLink, text: 'Website', href: profile.blog },
-              ].filter(Boolean).map(({ icon: Icon, text, href }) => (
-                href
-                  ? <a key={text} href={href} target="_blank" rel="noreferrer"
-                      style={{ display:'flex', alignItems:'center', gap:'0.4rem',
-                        color:'var(--c1)', fontSize:'0.8rem', fontFamily:'var(--font-mono)',
-                        textDecoration:'none' }}>
-                      <Icon size={12}/> {text}
-                    </a>
-                  : <span key={text} style={{ display:'flex', alignItems:'center', gap:'0.4rem',
-                      color:'var(--muted)', fontSize:'0.8rem', fontFamily:'var(--font-mono)' }}>
-                      <Icon size={12} style={{ color:'var(--c1)' }}/> {text}
-                    </span>
-              ))}
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div variants={item} style={{ display:'flex', gap:'1rem', flexWrap:'wrap' }}>
-              <motion.a href={`https://github.com/${profile.login}`} target="_blank" rel="noreferrer"
-                className="magnetic"
-                whileHover={{ y: -4, scale: 1.03, boxShadow: '0 20px 60px rgba(56,189,248,0.35), 0 0 40px rgba(56,189,248,0.12)' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                style={{
-                  display:'inline-flex', alignItems:'center', gap:'0.5rem',
-                  textDecoration:'none', padding:'0.85rem 2rem',
-                  background:'linear-gradient(135deg, var(--c1), var(--c2))',
-                  color:'#04060f', borderRadius:'16px', fontWeight:800, fontSize:'0.88rem',
-                  boxShadow:'0 8px 32px rgba(56,189,248,0.25), 0 0 0 0 rgba(56,189,248,0)',
-                  letterSpacing:'0.01em',
-                }}
-              >
-                View GitHub ↗
-              </motion.a>
-              <motion.a href="#contact"
-                className="lg lg-hover magnetic"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                style={{
-                  display:'inline-flex', alignItems:'center', gap:'0.5rem',
-                  textDecoration:'none', padding:'0.8rem 1.9rem',
-                  borderRadius:'14px', fontWeight:600, fontSize:'0.88rem', color:'var(--text)',
-                }}
-              >
-                Contact Me
-              </motion.a>
-            </motion.div>
-          </div>
-
+        {/* Phase 2: Name & Profile (fades in as you scroll) */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 3,
+          opacity: nameOpacity,
+          transform: `scale(${nameScale})`,
+          transition: 'none',
+          pointerEvents: nameOpacity < 0.1 ? 'none' : 'auto',
+        }}>
           {/* Avatar */}
-          <motion.div variants={item} style={{ position:'relative', flexShrink:0 }}>
-            {/* Outer orbit ring */}
+          <div style={{
+            position: 'relative',
+            marginBottom: '2rem',
+          }}>
             <div style={{
-              position:'absolute', inset:'-28px', borderRadius:'50%',
-              border:'1px dashed rgba(56,189,248,0.18)',
-              animation:'spin-slow 25s linear infinite',
-            }}/>
-            {/* Liquid glass ring with glow animation */}
+              position: 'absolute',
+              inset: '-12px',
+              borderRadius: '50%',
+              border: '1px dashed rgba(230,57,70,0.25)',
+              animation: 'spin-slow 20s linear infinite',
+            }} />
+            <img
+              src={profile.avatar_url}
+              alt="avatar"
+              style={{
+                width: 100, height: 100,
+                borderRadius: '50%',
+                border: '2px solid rgba(230,57,70,0.4)',
+                display: 'block',
+              }}
+            />
+            {/* Online dot */}
             <div style={{
-              position:'absolute', inset:'-10px', borderRadius:'50%',
-              background:'transparent',
-              border:'2px solid transparent',
-              backgroundImage:'linear-gradient(var(--bg),var(--bg)), linear-gradient(135deg,var(--c1),var(--c2),var(--c3))',
-              backgroundOrigin:'border-box', backgroundClip:'padding-box, border-box',
-              animation:'glow-pulse 3s ease-in-out infinite',
-            }}/>
-            <div className="lg" style={{
-              borderRadius:'50%', padding:4, width:192, height:192,
-              background:'rgba(255,255,255,0.06)',
+              position: 'absolute', bottom: 4, right: 4,
+              width: 14, height: 14, borderRadius: '50%',
+              background: '#34d399',
+              border: '2px solid #050505',
+              animation: 'pulse-glow 2.5s ease infinite',
+            }} />
+          </div>
+
+          {/* Name */}
+          <h2 style={{
+            fontSize: 'clamp(2.5rem, 8vw, 5.5rem)',
+            fontWeight: 900,
+            letterSpacing: '-0.04em',
+            lineHeight: 0.95,
+            textAlign: 'center',
+            marginBottom: '1rem',
+          }}>
+            <span className="grad-text">{profile.name || profile.login}</span>
+          </h2>
+
+          {/* Title */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.8rem',
+            marginBottom: '1.5rem',
+          }}>
+            <div style={{ width: 24, height: 2, background: 'var(--accent)', borderRadius: 2 }} />
+            <span style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8rem',
+              color: 'var(--accent)',
+              letterSpacing: '0.1em',
+              fontWeight: 500,
             }}>
-              <img src={profile.avatar_url} alt="avatar" style={{
-                width:184, height:184, borderRadius:'50%',
-                display:'block', objectFit:'cover',
-              }}/>
-            </div>
-            {/* Glow */}
-            <div style={{
-              position:'absolute', bottom:-20, left:'50%', transform:'translateX(-50%)',
-              width:120, height:24,
-              background:'radial-gradient(ellipse, rgba(56,189,248,0.35), transparent 70%)',
-              filter:'blur(8px)', pointerEvents:'none',
-            }}/>
-          </motion.div>
+              Full Stack Developer
+            </span>
+            <div style={{ width: 24, height: 2, background: 'var(--accent)', borderRadius: 2 }} />
+          </div>
+
+          {/* Bio */}
+          <p style={{
+            color: '#9A9A9A',
+            fontSize: '0.95rem',
+            lineHeight: 1.7,
+            textAlign: 'center',
+            maxWidth: 480,
+            marginBottom: '2rem',
+            opacity: infoOpacity,
+          }}>
+            {profile.bio || 'Crafting beautiful things on the web.'}
+          </p>
+
+          {/* Meta row */}
+          <div style={{
+            display: 'flex', gap: '1.5rem', flexWrap: 'wrap',
+            justifyContent: 'center',
+            marginBottom: '2rem',
+            opacity: infoOpacity,
+          }}>
+            {profile.location && (
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem',
+                color: '#6B6B6B', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+                <FiMapPin size={12} style={{ color: 'var(--accent)' }} /> {profile.location}
+              </span>
+            )}
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem',
+              color: '#6B6B6B', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+              <FiUsers size={12} style={{ color: 'var(--accent)' }} /> {profile.followers} followers
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem',
+              color: '#6B6B6B', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
+              <FiBookOpen size={12} style={{ color: 'var(--accent)' }} /> {profile.public_repos} repos
+            </span>
+          </div>
+
+          {/* CTAs */}
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', opacity: infoOpacity }}>
+            <a href={`https://github.com/${profile.login}`} target="_blank" rel="noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                textDecoration: 'none', padding: '0.85rem 2rem',
+                background: 'var(--accent)', color: '#fff',
+                borderRadius: '100px', fontWeight: 700, fontSize: '0.88rem',
+                transition: 'all 0.3s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(230,57,70,0.35)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none' }}
+            >
+              View GitHub ↗
+            </a>
+            <a href="/Soumyajit_Saha_Resume.pdf" target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                textDecoration: 'none', padding: '0.85rem 2rem',
+                background: 'transparent', color: '#fff',
+                borderRadius: '100px', fontWeight: 600, fontSize: '0.88rem',
+                border: '1px solid rgba(255,255,255,0.15)',
+                transition: 'all 0.3s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(230,57,70,0.5)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'none' }}
+            >
+              <FiFileText size={14} /> Resume
+            </a>
+          </div>
         </div>
 
         {/* Scroll hint */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ delay: 1.5, duration: 1.2 }}
-          style={{ textAlign:'center', paddingTop:'1rem' }}
-        >
-          <p style={{ fontFamily:'var(--font-mono)', fontSize:'0.68rem', letterSpacing:'0.12em',
-            color:'var(--muted)', marginBottom:'0.4rem' }}>SCROLL</p>
-          <FiArrowDown size={13} style={{ color:'var(--muted)', animation:'float 2s ease-in-out infinite' }}/>
-        </motion.div>
-      </motion.div>
+        <div className="hero-scroll-hint" style={{ opacity: scrollHintOpacity }}>
+          <p>SCROLL</p>
+          <FiArrowDown size={14} style={{ color: '#4A4A4A', animation: 'float 2s ease-in-out infinite' }} />
+        </div>
+      </div>
     </section>
   )
 }

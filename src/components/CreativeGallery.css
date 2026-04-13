@@ -1,0 +1,136 @@
+.creative-gallery-section {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sg-wrapper {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  align-items: start;
+  column-gap: 1rem;
+  row-gap: 1.5rem;
+  padding-bottom: 5rem;
+}
+
+.sg-image {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* subtle inner border */
+  position: relative;
+  background-color: var(--card-bg, rgba(20, 20, 20, 0.4));
+  margin: 0;
+  padding: 0;
+  /* Default height to keep layout stable while loading */
+  min-height: 200px;
+}
+
+.sg-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* The core reveal logic */
+  scale: 2;
+  opacity: 0;
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+}
+
+.sg-image.-inview img {
+  scale: 1;
+  opacity: 1;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  transition:
+    scale 1.5s cubic-bezier(0.86, 0, 0.31, 1),
+    opacity 1.5s cubic-bezier(0.86, 0, 0.31, 1),
+    clip-path 1.5s cubic-bezier(0.86, 0, 0.31, 1);
+}
+
+/* Beautiful custom 14-column grid spanning logic */
+.sg-image-1 {
+  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-column-end: 7;
+  height: 400px;
+}
+
+.sg-image-2 {
+  grid-row-start: 1;
+  grid-column-start: 9;
+  grid-column-end: 14;
+  height: 300px;
+  margin-top: 4rem;
+}
+
+.sg-image-3 {
+  grid-row-start: 2;
+  grid-column-start: 4;
+  grid-column-end: 10;
+  height: 500px;
+  z-index: 2;
+  margin-top: -3rem;
+}
+
+.sg-image-4 {
+  grid-row-start: 3;
+  grid-column-start: 10;
+  grid-column-end: 15;
+  height: 350px;
+  margin-top: -6rem;
+}
+
+.sg-image-5 {
+  grid-row-start: 4;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  height: 400px;
+  margin-top: -8rem;
+}
+
+.sg-image-6 {
+  grid-row-start: 4;
+  grid-column-start: 6;
+  grid-column-end: 12;
+  align-self: end;
+  height: 450px;
+  margin-top: 2rem;
+}
+
+/* Responsive flat fallback */
+@media (max-width: 1024px) {
+  .sg-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2rem;
+  }
+  
+  .sg-image {
+    grid-column: span 1 !important;
+    grid-row: auto !important;
+    height: 300px !important;
+    margin-top: 0 !important;
+  }
+
+  /* Make a couple elements full width for variation */
+  .sg-image-3, .sg-image-6 {
+    grid-column: span 2 !important;
+    height: 400px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .sg-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .sg-image {
+    grid-column: span 1 !important;
+    height: 300px !important;
+  }
+}

@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
-import { FiGithub } from 'react-icons/fi'
-import ThemeToggle from './ThemeToggle'
-import { motion, AnimatePresence } from 'framer-motion'
+import { FiGithub, FiFileText } from 'react-icons/fi'
 
 const USERNAME = import.meta.env.VITE_GITHUB_USERNAME
 
-export default function Navbar({ theme, toggleTheme }) {
+export default function Navbar({ scrollPct, isLightSection }) {
   const [scrolled, setScrolled] = useState(false)
-  const [active, setActive]     = useState('home')
-  const [hoveredLink, setHoveredLink] = useState(null)
+  const [active, setActive] = useState('home')
+  const [showInfo, setShowInfo] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -17,156 +15,107 @@ export default function Navbar({ theme, toggleTheme }) {
   }, [])
 
   useEffect(() => {
-    const ids = ['home','about','stats','repos','languages','certificates','contact']
+    const ids = ['home','about','stats','repos','certificates','contact']
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id) }),
-      { threshold: 0.4 }
+      { threshold: 0.3 }
     )
     ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el) })
     return () => obs.disconnect()
   }, [])
 
   const links = [
-    { id: 'home',      label: 'Home' },
-    { id: 'about',     label: 'About' },
-    { id: 'stats',     label: 'Stats' },
-    { id: 'repos',     label: 'Repos' },
-    { id: 'languages', label: 'Stack' },
-    { id: 'certificates', label: 'Certificates'},
-    { id: 'contact',   label: 'Contact' },
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'stats', label: 'Stats' },
+    { id: 'repos', label: 'Projects' },
+    { id: 'certificates', label: 'Certs' },
+    { id: 'contact', label: 'Contact' },
   ]
 
-  const isLight = theme === 'light'
   return (
-    <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      style={{
-        position: 'fixed', top: 10, left: '50%', zIndex: 100,
-        // we omit transform: translateX(-50%) directly in style to prevent framer motion conflict, 
-        // we'll apply it using x: "-50%" in framer motion
-        x: '-50%',
-        width: '90%', maxWidth: '800px',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        ...(scrolled ? {
-          background: isLight
-            ? 'rgba(240,244,255,0.75)'
-            : 'rgba(4,6,15,0.75)',
-          border: `1px solid ${isLight ? 'rgba(15,23,42,0.1)' : 'rgba(255,255,255,0.09)'}`,
-          backdropFilter: 'blur(32px) saturate(200%)',
-          WebkitBackdropFilter: 'blur(32px) saturate(200%)',
-          borderRadius: '16px',
-          padding: '0.55rem 1.25rem',
-          boxShadow: isLight
-            ? '0 4px 24px rgba(15,23,42,0.1), inset 0 1px 0 rgba(255,255,255,0.8)'
-            : '0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)',
-        } : { padding: '0.4rem 0' }),
-      }}
-    >
-        {/* Logo */}
-        <motion.a href="#home" 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <div style={{
-            width: 34, height: 34, borderRadius: '10px',
-            background: 'linear-gradient(135deg, var(--c1), var(--c2))',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'var(--font-mono)', color: 'var(--text)', fontWeight: 700, fontSize: '0.78rem',
-            boxShadow: '0 4px 16px rgba(56,189,248,0.35)',
-          }}>
-            {(USERNAME || 'SP').slice(0,2).toUpperCase()}
-          </div>
-          <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--muted)', fontSize: '0.72rem' }}>
-            ~/{USERNAME}
-          </span>
-        </motion.a>
+    <>
+      <nav className={`st-navbar ${isLightSection ? 'light' : ''}`}>
+        {/* Left — Logo */}
+        <a href="#home" className="nav-logo" style={{ textDecoration: 'none' }}>
+          <div className="nav-logo-icon">⚡</div>
+          <span className="nav-logo-text">{USERNAME || 'Portfolio'}©</span>
+        </a>
 
-        {/* Right side */}
-        <div style={{ display: 'flex', gap: '0.15rem', alignItems: 'center', flexWrap: 'wrap' }}>
-          {/* Nav links */}
-          <AnimatePresence>
-            {links.map(link => (
-              <a key={link.id} href={`#${link.id}`}
-                onClick={() => setActive(link.id)}
-                onMouseEnter={() => setHoveredLink(link.id)}
-                onMouseLeave={() => setHoveredLink(null)}
-                style={{
-                  position: 'relative',
-                  textDecoration: 'none',
-                  padding: '0.38rem 0.85rem',
-                  borderRadius: '10px',
-                  fontSize: '0.8rem', fontWeight: 500,
-                  letterSpacing: '0.01em',
-                  color: active === link.id ? 'var(--c1)' : 'var(--muted2)',
-                  transition: 'color 0.2s ease',
-                  outline: 'none',
-                }}
-              >
-                {hoveredLink === link.id && active !== link.id && (
-                  <motion.div
-                    layoutId="nav-hover"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    style={{
-                      position: 'absolute', inset: 0,
-                      background: isLight ? 'rgba(15,23,42,0.06)' : 'rgba(255,255,255,0.06)',
-                      border: '1px solid transparent', // Will adjust based on your original var(--lg-border)
-                      borderRadius: '10px', zIndex: -1
-                    }}
-                    transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
-                  />
-                )}
-                {active === link.id && (
-                  <motion.div
-                    layoutId="nav-active"
-                    initial={false}
-                    transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
-                    style={{
-                      position: 'absolute', inset: 0,
-                      background: 'rgba(56,189,248,0.1)',
-                      border: '1px solid rgba(56,189,248,0.2)',
-                      borderRadius: '10px', zIndex: -1
-                    }}
-                  />
-                )}
-                <span style={{ position: 'relative', zIndex: 1 }}>{link.label}</span>
-              </a>
-            ))}
-          </AnimatePresence>
+        {/* Center — Nav links */}
+        <div className="nav-links">
+          {links.map(link => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              className={`nav-link ${active === link.id ? 'active' : ''}`}
+              onClick={() => setActive(link.id)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
-          {/* GitHub */}
-          <motion.a href={`https://github.com/${USERNAME}`} target="_blank" rel="noreferrer"
-            whileHover={{ 
-              y: -1, 
-              boxShadow: '0 6px 24px rgba(56,189,248,0.25)',
-              background: 'linear-gradient(135deg,rgba(56,189,248,0.22),rgba(167,139,250,0.22))'
-            }}
-            whileTap={{ scale: 0.95 }}
-            style={{
-              marginLeft: '0.35rem',
-              display: 'flex', alignItems: 'center', gap: '0.45rem',
-              textDecoration: 'none',
-              padding: '0.38rem 0.9rem',
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, rgba(56,189,248,0.14), rgba(167,139,250,0.14))',
-              border: '1px solid rgba(56,189,248,0.22)',
-              backdropFilter: 'blur(12px)',
-              color: 'var(--c1)', fontSize: '0.78rem', fontWeight: 600,
-              boxShadow: '0 2px 12px rgba(56,189,248,0.12)',
-            }}
+        {/* Right — Actions */}
+        <div className="nav-right">
+          <button className="info-btn" onClick={() => setShowInfo(true)} title="Info">
+            i
+          </button>
+
+          <a
+            href={`https://github.com/${USERNAME}`}
+            target="_blank"
+            rel="noreferrer"
+            className="nav-btn"
           >
-            <FiGithub size={13} /> GitHub
-          </motion.a>
+            <FiGithub size={14} />
+            GitHub
+          </a>
 
-          {/* Theme toggle */}
-          <div style={{ marginLeft: '0.35rem' }}>
-            <ThemeToggle theme={theme} toggle={toggleTheme} />
+          <span className="scroll-pct">{Math.round(scrollPct || 0)}%</span>
+        </div>
+      </nav>
+
+      {/* Info Modal */}
+      {showInfo && (
+        <div className="info-modal-overlay" onClick={() => setShowInfo(false)}>
+          <div className="info-modal" onClick={e => e.stopPropagation()}>
+            <button className="info-modal-close" onClick={() => setShowInfo(false)}>✕</button>
+            
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h3 style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
+                Portfolio
+              </h3>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#6B6B6B', letterSpacing: '0.08em' }}>
+                V. 2026
+              </p>
+            </div>
+
+            <p style={{ color: '#9A9A9A', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '1.5rem' }}>
+              A developer portfolio built with React, Vite, and Three.js. 
+              Data is fetched live from the GitHub API on every visit. 
+              Inspired by the StringTune aesthetic.
+            </p>
+
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <a href={`https://github.com/${USERNAME}`} target="_blank" rel="noreferrer"
+                className="nav-btn" style={{ fontSize: '0.78rem' }}>
+                <FiGithub size={13} /> GitHub
+              </a>
+              <a href="/Soumyajit_Saha_Resume.pdf" target="_blank" rel="noopener noreferrer"
+                className="nav-btn" style={{ fontSize: '0.78rem' }}>
+                <FiFileText size={13} /> Resume
+              </a>
+            </div>
+
+            <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: '#4A4A4A' }}>
+                Built by {USERNAME} · React + Vite + Three.js
+              </p>
+            </div>
           </div>
         </div>
-    </motion.nav>
+      )}
+    </>
   )
 }

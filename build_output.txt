@@ -1,0 +1,29 @@
+
+> rc-portfolio@1.0.0 build
+> tsc && vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1211 modules transformed.
+[31mx[39m Build failed in 2.85s
+[31merror during build:
+[31msrc/App.jsx (4:21): "StringInview" is not exported by "node_modules/@fiddle-digital/string-tune/dist/index.mjs", imported by "src/App.jsx".[31m
+file: [36mC:/Users/itzso/soumya-portfolio/src/App.jsx:4:21[31m
+[33m
+2: import Lenis from 'lenis'
+3: import { MotionConfig } from 'framer-motion'
+4: import StringTune, { StringInview, StringLazy } from '@fiddle-digital/string-tune'
+                        ^
+5: import { useGitHub } from './hooks/useGitHub'
+6: import { useTheme } from './hooks/useTheme'
+[31m
+    at getRollupError (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/parseAst.js:406:41)
+    at error (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/parseAst.js:402:42)
+    at Module.error (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:17065:16)
+    at Module.traceVariable (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:17477:29)
+    at ModuleScope.findVariable (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:15090:39)
+    at FunctionScope.findVariable (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:5676:38)
+    at FunctionBodyScope.findVariable (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:5676:38)
+    at ReturnValueScope.findVariable (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:5676:38)
+    at FunctionBodyScope.findVariable (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:5676:38)
+    at Identifier.bind (file:///C:/Users/itzso/soumya-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:5450:40)[39m
