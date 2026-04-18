@@ -34,6 +34,14 @@ const certificates = [
     desc: 'Official learning certificate from Amazon demonstrating continued professional development.',
     year: '2026',
     link: '/Amazon.pdf'
+  },
+  {
+    num: '05',
+    title: 'Python Certification',
+    provider: 'Microsoft India',
+    desc: 'Official Python certification demonstrating programming proficiency and foundational concepts.',
+    year: '2026',
+    link: '/certificate_Python_Microsoft_India.pdf'
   }
 ]
 
