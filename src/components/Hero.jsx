@@ -87,6 +87,7 @@ export default function Hero({ profile }) {
               borderRadius: '50%',
               border: '1px dashed rgba(230,57,70,0.25)',
               animation: 'spin-slow 20s linear infinite',
+              pointerEvents: 'none',
             }} />
             <img
               src={profile.avatar_url}
@@ -96,6 +97,18 @@ export default function Hero({ profile }) {
                 borderRadius: '50%',
                 border: '2px solid rgba(230,57,70,0.4)',
                 display: 'block',
+                transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'scale(1.15) rotate(5deg)';
+                e.currentTarget.style.borderColor = 'rgba(230,57,70,0.8)';
+                e.currentTarget.style.boxShadow = '0 0 30px rgba(230,57,70,0.4)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
+                e.currentTarget.style.borderColor = 'rgba(230,57,70,0.4)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             />
             {/* Online dot */}

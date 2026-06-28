@@ -10,6 +10,7 @@ import LanguageChart from './components/LanguageChart'
 import Contact from './components/Contact'
 import Certificates from './components/Certificates'
 import Footer from './components/Footer'
+import Loader from './components/Loader'
 
 /* ═══════════════════════════════════════════
    CUSTOM CURSOR (StringTune style)
@@ -255,6 +256,7 @@ export default function App() {
 
   return (
     <>
+      <Loader />
       {showLoading && (
         <LoadingScreen isLoaded={!loading} onDone={handleLoadingDone} />
       )}

@@ -13,7 +13,7 @@ const MOCK_PROFILE = {
   name: 'Soumyajit Saha',
   login: 'itzsoumyajit-dev',
   bio: 'Crafting beautiful things on the web',
-  avatar_url: 'https://avatars.githubusercontent.com/u/9919?v=4', // GitHub icon placeholder
+  avatar_url: `https://github.com/${USERNAME}.png`, // Fetch actual avatar using username
   public_repos: 15,
   followers: 12,
   following: 8,
