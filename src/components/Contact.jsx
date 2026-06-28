@@ -26,8 +26,8 @@ const SOCIALS = [
   },
   {
     label: 'Instagram',
-    handle: '@soumyajit.saha07',
-    href: 'https://www.instagram.com/soumyajit.saha07/',
+    handle: '@soumyaajitt7',
+    href: 'https://www.instagram.com/soumyaajitt7/',
     Icon: FaInstagram,
     gradient: 'from-pink-500 via-red-500 to-yellow-500',
   },

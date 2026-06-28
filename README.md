@@ -209,6 +209,8 @@ Open **[http://localhost:5173](http://localhost:5173)** in your browser! 🚀
 [![GitHub](https://img.shields.io/badge/GitHub-itzsoumyajit--dev-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/itzsoumyajit-dev)
 &nbsp;
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/itz-soumyajit-soumyajit-saha-413a79337)
+&nbsp;
+[![Instagram](https://img.shields.io/badge/Instagram-Follow-e1306c?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/soumyaajitt7/)
 
 </div>
 

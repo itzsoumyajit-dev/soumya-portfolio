@@ -51,7 +51,7 @@ export default function Footer() {
               { href: `https://github.com/${USERNAME}`, icon: <FiGithub size={13}/>, label: 'GitHub' },
               { href: 'https://x.com/ItzSoumyajit', icon: <XIcon/>, label: 'X' },
               { href: 'https://www.linkedin.com/in/itz-soumyajit-soumyajit-saha-413a79337', icon: <LIIcon/>, label: 'LinkedIn' },
-              { href: 'https://www.instagram.com/soumyajit.saha07/', icon: <IGIcon/>, label: 'Instagram' },
+              { href: 'https://www.instagram.com/soumyaajitt7/', icon: <IGIcon/>, label: 'Instagram' },
             ].map(({ href, icon, label }) => (
               <motion.a 
                 key={label} 
