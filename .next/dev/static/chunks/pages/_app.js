@@ -1,0 +1,6 @@
+__turbopack_load_page_chunks__("/_app", [
+  "static/chunks/[root-of-the-server]__1-o5xe8._.js",
+  "static/chunks/[root-of-the-server]__1n6wdc1._.js",
+  "static/chunks/soumya-portfolio_pages__app_0du2_q-._.js",
+  "static/chunks/turbopack-soumya-portfolio_pages__app_20gngf6._.js"
+])

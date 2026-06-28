@@ -1,230 +1,233 @@
-import { useEffect, useState, useRef } from 'react'
-import { FiArrowDown, FiMapPin, FiUsers, FiBookOpen, FiFileText } from 'react-icons/fi'
-import HeroScene3D from './HeroScene3D'
+import { useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FiMapPin, FiUsers, FiBookOpen, FiFileText, FiArrowRight, FiGithub, FiTerminal, FiCode, FiActivity } from 'react-icons/fi';
 
 export default function Hero({ profile }) {
-  const [scrollY, setScrollY] = useState(0)
-  const sectionRef = useRef(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, 150]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const handleMouseMove = (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      setMousePos({ x, y });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
-  if (!profile) return null
+  if (!profile) return null;
 
-  const vh = typeof window !== 'undefined' ? window.innerHeight : 800
-  const progress = Math.min(scrollY / (vh * 2), 1) // 0 to 1 over 2vh of scroll
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+    }
+  };
 
-  // Parallax values
-  const titleOpacity = Math.max(1 - progress * 2.5, 0)
-  const titleY = progress * -80
-  const subtitleOpacity = Math.max(1 - progress * 3, 0)
-  const nameOpacity = progress < 0.2 ? 0 : Math.min((progress - 0.2) * 3, 1)
-  const nameScale = 0.85 + nameOpacity * 0.15
-  const infoOpacity = progress < 0.4 ? 0 : Math.min((progress - 0.4) * 3, 1)
-  const scrollHintOpacity = Math.max(1 - progress * 5, 0)
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
+    visible: { 
+      opacity: 1, y: 0, filter: 'blur(0px)',
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+    }
+  };
 
   return (
-    <section id="home" ref={sectionRef} className="st-hero">
-      <div className="st-hero-sticky">
-        {/* 3D Background */}
-        <div className="hero-3d-container">
-          <HeroScene3D scrollProgress={progress} />
-        </div>
+    <section id="home" className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden pt-20">
+      
+      {/* --- Premium Dynamic Background --- */}
+      <div className="absolute inset-0 z-0 bg-background" />
+      
+      {/* Radial fading grid texture */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.08]"
+        style={{
+          backgroundImage: 'linear-gradient(to right, rgb(var(--text-primary)) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--text-primary)) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+          maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 100%)',
+        }}
+      />
+      
+      {/* Subtle Glowing Orbs (No mix-blend issues) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
+        <motion.div 
+          className="absolute w-[80vw] max-w-[800px] h-[80vh] max-h-[800px] rounded-[100%] bg-accent/10 dark:bg-accent/20 blur-[100px] animate-blob"
+          style={{ x: mousePos.x * 1.5, y: mousePos.y * 1.5 }}
+        />
+        <motion.div 
+          className="absolute w-[60vw] max-w-[600px] h-[60vh] max-h-[600px] rounded-[100%] bg-accent-secondary/15 dark:bg-accent-secondary/25 blur-[120px] animate-blob animation-delay-2000 top-0 right-0 translate-x-1/4 -translate-y-1/4"
+          style={{ x: mousePos.x * -1, y: mousePos.y * -1 }}
+        />
+        <motion.div 
+          className="absolute w-[50vw] max-w-[500px] h-[50vh] max-h-[500px] rounded-[100%] bg-accent-tertiary/15 dark:bg-accent-tertiary/25 blur-[90px] animate-blob animation-delay-4000 bottom-0 left-0 -translate-x-1/4 translate-y-1/4"
+          style={{ x: mousePos.x * 2, y: mousePos.y * 2 }}
+        />
+      </div>
 
-        {/* Phase 1: Large intro text */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 2,
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
-          transition: 'none',
-          pointerEvents: titleOpacity < 0.1 ? 'none' : 'auto',
-        }}>
-          <p className="st-mono-label" style={{ marginBottom: '2rem', letterSpacing: '0.2em' }}>
-            PORTFOLIO · {new Date().getFullYear()}
-          </p>
-          <h1 className="hero-title">
-            Master<br />
-            Your <span className="hero-accent">Code</span>
-          </h1>
-          <p className="hero-subtitle" style={{
-            opacity: subtitleOpacity,
-          }}>
-            Crafting beautiful things on the web
-          </p>
-        </div>
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
 
-        {/* Phase 2: Name & Profile (fades in as you scroll) */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 3,
-          opacity: nameOpacity,
-          transform: `scale(${nameScale})`,
-          transition: 'none',
-          pointerEvents: nameOpacity < 0.1 ? 'none' : 'auto',
-        }}>
-          {/* Avatar */}
-          <div style={{
-            position: 'relative',
-            marginBottom: '2rem',
-          }}>
-            <div style={{
-              position: 'absolute',
-              inset: '-12px',
-              borderRadius: '50%',
-              border: '1px dashed rgba(230,57,70,0.25)',
-              animation: 'spin-slow 20s linear infinite',
-              pointerEvents: 'none',
-            }} />
-            <img
-              src={profile.avatar_url}
-              alt="avatar"
-              style={{
-                width: 100, height: 100,
-                borderRadius: '50%',
-                border: '2px solid rgba(230,57,70,0.4)',
-                display: 'block',
-                transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = 'scale(1.15) rotate(5deg)';
-                e.currentTarget.style.borderColor = 'rgba(230,57,70,0.8)';
-                e.currentTarget.style.boxShadow = '0 0 30px rgba(230,57,70,0.4)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
-                e.currentTarget.style.borderColor = 'rgba(230,57,70,0.4)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            />
-            {/* Online dot */}
-            <div style={{
-              position: 'absolute', bottom: 4, right: 4,
-              width: 14, height: 14, borderRadius: '50%',
-              background: '#34d399',
-              border: '2px solid #050505',
-              animation: 'pulse-glow 2.5s ease infinite',
-            }} />
-          </div>
-
-          {/* Name */}
-          <h2 style={{
-            fontSize: 'clamp(2.5rem, 8vw, 5.5rem)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
-            lineHeight: 0.95,
-            textAlign: 'center',
-            marginBottom: '1rem',
-          }}>
-            <span className="grad-text">{profile.name || profile.login}</span>
-          </h2>
-
-          {/* Title */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '0.8rem',
-            marginBottom: '1.5rem',
-          }}>
-            <div style={{ width: 24, height: 2, background: 'var(--accent)', borderRadius: 2 }} />
-            <span style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.8rem',
-              color: 'var(--accent)',
-              letterSpacing: '0.1em',
-              fontWeight: 500,
-            }}>
-              Full Stack Developer
+      {/* --- Main Content --- */}
+      <motion.div 
+        style={{ opacity }}
+        className="max-w-7xl mx-auto px-6 relative z-10 w-full grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-8 items-center"
+      >
+        {/* Left Side: Typography */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-start text-left xl:pr-12"
+        >
+          {/* Status Badge */}
+          <motion.div variants={itemVariants} className="glass-badge flex items-center gap-3 px-4 py-2 rounded-full mb-8 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <div style={{ width: 24, height: 2, background: 'var(--accent)', borderRadius: 2 }} />
-          </div>
+            <span className="font-mono text-[11px] tracking-[0.2em] text-text-secondary uppercase font-semibold">
+              Available for new opportunities
+            </span>
+          </motion.div>
+
+          {/* Main Headline */}
+          <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl lg:text-8xl font-black mb-6 leading-[1.02] tracking-tighter">
+            <span className="block text-text">Crafting</span>
+            <span className="block hero-gradient-text pb-1 drop-shadow-sm">Digital</span>
+            <span className="block text-text">Experiences.</span>
+          </motion.h1>
 
           {/* Bio */}
-          <p style={{
-            color: '#9A9A9A',
-            fontSize: '0.95rem',
-            lineHeight: 1.7,
-            textAlign: 'center',
-            maxWidth: 480,
-            marginBottom: '2rem',
-            opacity: infoOpacity,
-          }}>
-            {profile.bio || 'Crafting beautiful things on the web.'}
-          </p>
+          <motion.p variants={itemVariants} className="text-text-secondary text-lg md:text-xl max-w-xl mb-12 leading-relaxed font-light">
+            I'm <span className="font-medium text-text">{profile.name || profile.login}</span>, a full-stack developer who builds elegant, performant, and scalable web solutions. Let's create something unforgettable.
+          </motion.p>
 
-          {/* Meta row */}
-          <div style={{
-            display: 'flex', gap: '1.5rem', flexWrap: 'wrap',
-            justifyContent: 'center',
-            marginBottom: '2rem',
-            opacity: infoOpacity,
-          }}>
-            {profile.location && (
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem',
-                color: '#6B6B6B', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
-                <FiMapPin size={12} style={{ color: 'var(--accent)' }} /> {profile.location}
-              </span>
-            )}
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem',
-              color: '#6B6B6B', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
-              <FiUsers size={12} style={{ color: 'var(--accent)' }} /> {profile.followers} followers
-            </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem',
-              color: '#6B6B6B', fontSize: '0.8rem', fontFamily: 'var(--font-mono)' }}>
-              <FiBookOpen size={12} style={{ color: 'var(--accent)' }} /> {profile.public_repos} repos
-            </span>
-          </div>
-
-          {/* CTAs */}
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', opacity: infoOpacity }}>
-            <a href={`https://github.com/${profile.login}`} target="_blank" rel="noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                textDecoration: 'none', padding: '0.85rem 2rem',
-                background: 'var(--accent)', color: '#fff',
-                borderRadius: '100px', fontWeight: 700, fontSize: '0.88rem',
-                transition: 'all 0.3s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 40px rgba(230,57,70,0.35)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none' }}
+          {/* CTA Buttons */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-5">
+            <a
+              href="#repos"
+              className="group relative flex items-center gap-3 px-8 py-4 rounded-full font-semibold overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-95"
             >
-              View GitHub ↗
+              {/* Premium Animated Gradient Background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-accent via-accent-secondary to-accent bg-[length:200%_auto] animate-shimmer" />
+              <div className="absolute inset-[1px] rounded-full bg-background/10 backdrop-blur-sm group-hover:bg-transparent transition-colors duration-500" />
+              
+              <span className="relative z-10 font-sans tracking-wide text-white drop-shadow-md">Explore Projects</span>
+              <FiArrowRight className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300 text-white" />
             </a>
-            <a href="/Soumyajit_Saha_Resume.pdf" target="_blank" rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                textDecoration: 'none', padding: '0.85rem 2rem',
-                background: 'transparent', color: '#fff',
-                borderRadius: '100px', fontWeight: 600, fontSize: '0.88rem',
-                border: '1px solid rgba(255,255,255,0.15)',
-                transition: 'all 0.3s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(230,57,70,0.5)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'none' }}
+            
+            <a
+              href="/Soumyajit_Saha_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-button flex items-center gap-2 px-8 py-4 rounded-full text-text font-semibold hover:text-accent transition-colors"
             >
-              <FiFileText size={14} /> Resume
+              <FiFileText size={18} />
+              <span className="font-sans tracking-wide">Resume</span>
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Scroll hint */}
-        <div className="hero-scroll-hint" style={{ opacity: scrollHintOpacity }}>
-          <p>SCROLL</p>
-          <FiArrowDown size={14} style={{ color: '#4A4A4A', animation: 'float 2s ease-in-out infinite' }} />
-        </div>
-      </div>
+        {/* --- Right Side: Structured Bento Grid --- */}
+        <motion.div 
+          className="hidden lg:grid grid-cols-2 gap-4 w-full h-fit ml-auto"
+          style={{ y: y1 }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        >
+          {/* 1. Main Profile Card (Spans 2 Rows) */}
+          <motion.div 
+            className="col-span-1 row-span-2 glass-card p-6 rounded-3xl z-20 flex flex-col items-center justify-center gap-5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="relative">
+              <div className="absolute -inset-2 bg-gradient-to-br from-accent via-accent-secondary to-accent-tertiary rounded-full blur-md opacity-40 animate-pulse-glow" />
+              <img
+                src={profile.avatar_url || 'https://github.com/identicons/default.png'}
+                alt={profile.name || 'Developer'}
+                className="relative z-10 w-32 h-32 rounded-full border-[3px] border-background object-cover bg-background"
+              />
+              <div className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-400 border-[3px] border-background z-20" />
+            </div>
+            <div className="text-center w-full">
+              <div className="font-bold text-xl text-text truncate">{profile.name}</div>
+              <div className="text-sm text-text-tertiary font-mono truncate">@{profile.login}</div>
+            </div>
+          </motion.div>
+
+          {/* 2. Repositories */}
+          <motion.div 
+            className="col-span-1 glass-card p-5 rounded-3xl z-10 flex flex-col justify-center shadow-lg gap-2"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent ring-1 ring-accent/20">
+                <FiBookOpen size={20} />
+              </div>
+              <div className="text-xs text-text-tertiary uppercase tracking-wider font-semibold">Repos</div>
+            </div>
+            <div className="text-4xl font-bold font-mono tracking-tighter mt-1">{profile.public_repos}</div>
+          </motion.div>
+
+          {/* 3. Followers */}
+          <motion.div 
+            className="col-span-1 glass-card p-5 rounded-3xl z-10 flex flex-col justify-center shadow-lg gap-2"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-accent-tertiary/10 flex items-center justify-center text-accent-tertiary ring-1 ring-accent-tertiary/20">
+                <FiUsers size={20} />
+              </div>
+              <div className="text-xs text-text-tertiary uppercase tracking-wider font-semibold">Followers</div>
+            </div>
+            <div className="text-4xl font-bold font-mono tracking-tighter mt-1">{profile.followers}</div>
+          </motion.div>
+
+          {/* 4. Code Snippet (Spans 2 Columns) */}
+          <motion.div 
+            className="col-span-2 glass-card p-6 rounded-3xl z-10 shadow-lg"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-400/90" />
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/90" />
+              <div className="w-2.5 h-2.5 rounded-full bg-green-400/90" />
+            </div>
+            <pre className="text-xs md:text-sm font-mono leading-relaxed text-text-primary overflow-hidden">
+              <span className="text-accent-secondary">const</span> <span className="text-accent-tertiary">developer</span> = {'{'} <br/>
+              &nbsp;&nbsp;role: <span className="text-emerald-500">'Full Stack'</span>,<br/>
+              &nbsp;&nbsp;passion: <span className="text-emerald-500">'UI/UX'</span>,<br/>
+              &nbsp;&nbsp;status: <span className="text-emerald-500">'Online'</span><br/>
+              {'}'};
+            </pre>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div 
+        style={{ opacity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 pointer-events-none"
+      >
+        <span className="text-text-tertiary text-[9px] font-mono tracking-[0.3em] uppercase font-bold">Scroll</span>
+        <motion.div 
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          className="w-5 h-8 rounded-full border-2 border-text-tertiary/20 flex items-start justify-center pt-1.5 backdrop-blur-sm"
+        >
+          <div className="w-1 h-1.5 rounded-full bg-accent/60" />
+        </motion.div>
+      </motion.div>
     </section>
-  )
+  );
 }
