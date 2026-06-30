@@ -4,18 +4,18 @@
 
 @layer base {
   :root {
-    --background: 250, 250, 250;
-    --background-secondary: 244, 244, 245;
-    --background-tertiary: 228, 228, 231;
+    --background: 248, 248, 255;
+    --background-secondary: 240, 240, 255;
+    --background-tertiary: 225, 225, 250;
     
-    --text-primary: 9, 9, 11;
-    --text-secondary: 63, 63, 70;
-    --text-tertiary: 113, 113, 122;
+    --text-primary: 25, 20, 65;
+    --text-secondary: 65, 60, 120;
+    --text-tertiary: 105, 100, 160;
     
-    --accent: 99, 102, 241;
-    --accent-secondary: 139, 92, 246;
-    --accent-tertiary: 6, 182, 212;
-    --border: 228, 228, 231;
+    --accent: 110, 95, 230;
+    --accent-secondary: 130, 105, 245;
+    --accent-tertiary: 155, 130, 255;
+    --border: 225, 225, 250;
 
     /* Liquid Glass tokens — light mode */
     --glass-bg: rgba(255, 255, 255, 0.45);
@@ -27,18 +27,18 @@
   }
 
   .dark {
-    --background: 8, 8, 14;
-    --background-secondary: 14, 14, 22;
-    --background-tertiary: 22, 22, 38;
+    --background: 26, 22, 53; /* Deep dark purple for edges */
+    --background-secondary: 44, 35, 96; /* Lighter purple for gradient center */
+    --background-tertiary: 62, 54, 133;
     
-    --text-primary: 248, 250, 252;
-    --text-secondary: 148, 163, 184;
-    --text-tertiary: 100, 116, 139;
+    --text-primary: 255, 255, 255;
+    --text-secondary: 215, 215, 255;
+    --text-tertiary: 165, 165, 225;
     
-    --accent: 99, 102, 241;
-    --accent-secondary: 139, 92, 246;
-    --accent-tertiary: 6, 182, 212;
-    --border: 30, 30, 40;
+    --accent: 142, 132, 240;
+    --accent-secondary: 165, 140, 255;
+    --accent-tertiary: 185, 165, 255;
+    --border: 62, 54, 133;
 
     /* Liquid Glass tokens — dark mode */
     --glass-bg: rgba(255, 255, 255, 0.06);
@@ -50,7 +50,9 @@
   }
 
   body {
-    @apply bg-background text-text font-sans antialiased transition-colors duration-500 ease-in-out;
+    @apply text-text font-sans antialiased;
+    background-color: rgba(var(--background), 1);
+    min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiStar, FiGitBranch, FiGithub } from 'react-icons/fi';
+import { FiStar, FiGitBranch, FiGithub, FiCode, FiImage, FiHeart, FiMessageSquare } from 'react-icons/fi';
 import RepoModal from './RepoModal';
 
 const LC = {
@@ -10,16 +10,32 @@ const LC = {
   Swift:'#f05138', Dart:'#00B4AB', PHP:'#777BB4', 'C#':'#178600',
 };
 
+function getRepoIcon(name) {
+  const n = name.toLowerCase();
+  if (n.includes('image')) return <FiImage size={20} />;
+  if (n.includes('medical') || n.includes('health')) return <FiHeart size={20} />;
+  if (n.includes('chat') || n.includes('gpt')) return <FiMessageSquare size={20} />;
+  if (n.includes('translator')) return <span className="font-bold text-lg">A文</span>;
+  return <FiCode size={20} />;
+}
+
 export default function RepoGrid({ repos }) {
   const [showAll, setShowAll] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState(null);
   const display = showAll ? repos.slice(0, 18) : repos.slice(0, 6);
 
   return (
-    <section id="repos" className="py-28 md:py-36 relative z-10">
-      <div className="absolute inset-0 opacity-20 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at 70% 50%, rgba(var(--accent-secondary), 0.06) 0%, transparent 50%)',
-      }} />
+    <section id="repos" className="py-28 md:py-36 relative z-10 overflow-hidden">
+      {/* Cinematic Projects Background Layers */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60 bg-gradient-to-b from-[#0b0618]/80 via-[#100826]/70 to-[#0b0618]/90 backdrop-blur-[2px]" />
+      
+      {/* Soft Fog & Lighting */}
+      <div className="absolute top-1/4 left-0 w-full h-[300px] opacity-20 pointer-events-none bg-purple-600/30 blur-[100px] mix-blend-screen" />
+      <div className="absolute bottom-1/4 right-0 w-full h-[400px] opacity-10 pointer-events-none bg-indigo-500/20 blur-[120px] mix-blend-screen" />
+      
+      {/* Floating abstract rings local to this section */}
+      <div className="absolute top-10 left-10 w-[500px] h-[500px] rounded-full border-[1px] border-purple-500/10 opacity-20" />
+      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] rounded-full border-[1px] border-indigo-500/5 opacity-10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
         <motion.div
@@ -95,64 +111,66 @@ function RepoCard({ repo, delay, onClick }) {
       <motion.div 
         whileHover={{ y: -8, scale: 1.01 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="glass-card rounded-3xl p-6 md:p-8 h-full flex flex-col"
+        className="rounded-3xl p-6 md:p-8 h-full flex flex-col relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
       >
-        {/* Language Color bar */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] z-[2]">
-          <div 
-            className="h-full transition-all duration-500 opacity-40 group-hover:opacity-100"
-            style={{ background: `linear-gradient(90deg, ${lc}, transparent 80%)` }}
-          />
-        </div>
+        {/* Glass top reflection */}
+        <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
 
+        {/* Content Wrapper (above reflections) */}
         <div className="relative z-10 flex flex-col h-full">
-          <div className="flex justify-between items-start mb-4">
-            <h3 className="font-display font-bold text-xl group-hover:text-accent transition-colors duration-300 line-clamp-1">
-              {repo.name}
-            </h3>
+          
+          {/* Header */}
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-600 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform duration-300">
+                {getRepoIcon(repo.name)}
+              </div>
+              <h3 className="font-display font-bold text-xl text-white group-hover:text-purple-300 transition-colors duration-300 line-clamp-1">
+                {repo.name}
+              </h3>
+            </div>
             <a 
               href={repo.html_url} 
               target="_blank" 
               rel="noreferrer" 
               onClick={(e) => e.stopPropagation()}
-              className="glass-badge p-2 rounded-xl hover:bg-accent/20 hover:text-accent transition-all duration-300 text-text-secondary flex-shrink-0"
+              className="w-10 h-10 rounded-full bg-[#100826]/50 border border-purple-500/20 flex items-center justify-center text-white hover:bg-purple-500 hover:border-purple-500 transition-all duration-300 shrink-0"
             >
-              <FiGithub size={16} />
+              <FiGithub size={18} />
             </a>
           </div>
 
-          <p className="text-text-secondary text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+          {/* Description */}
+          <p className="text-text-secondary text-sm leading-relaxed mb-6 line-clamp-3">
             {repo.description || 'No description provided.'}
           </p>
 
-          <div className="mt-auto space-y-4">
-            {repo.topics?.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {repo.topics.slice(0, 3).map(t => (
-                  <span key={t} className="glass-badge px-3 py-1 rounded-full font-mono text-[11px] text-accent font-medium">
-                    {t}
-                  </span>
-                ))}
-              </div>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {repo.language && (
+              <span className="glass-badge px-3 py-1.5 rounded-xl font-mono text-[11px] text-accent font-medium flex items-center gap-1.5 bg-[#100826]/50 border border-purple-500/20">
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: lc, boxShadow: `0 0 8px ${lc}80` }} />
+                {repo.language}
+              </span>
             )}
-
-            <div className="flex items-center justify-between text-xs font-mono text-text-tertiary pt-4 border-t" style={{ borderColor: 'var(--glass-border)' }}>
-              {repo.language && (
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: lc, boxShadow: `0 0 8px ${lc}50` }} />
-                  {repo.language}
-                </span>
-              )}
-              <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1">
-                  <FiStar className="text-amber-400" /> {repo.stargazers_count}
-                </span>
-                <span className="flex items-center gap-1">
-                  <FiGitBranch className="text-violet-400" /> {repo.forks_count}
-                </span>
-              </div>
-            </div>
+            {repo.topics?.slice(0, 3).map(t => (
+              <span key={t} className="glass-badge px-3 py-1.5 rounded-xl font-mono text-[11px] text-accent font-medium bg-[#100826]/50 border border-purple-500/20">
+                {t}
+              </span>
+            ))}
           </div>
+
+          {/* Footer Stats */}
+          <div className="mt-auto flex items-center gap-5 text-xs font-mono text-text-tertiary">
+            <span className="flex items-center gap-1.5 text-amber-400">
+              <FiStar size={14} /> <span className="text-text-secondary">{repo.stargazers_count}</span>
+            </span>
+            <span className="flex items-center gap-1.5 text-text-tertiary">
+              <FiGitBranch size={14} /> <span className="text-text-secondary">{repo.forks_count}</span>
+            </span>
+          </div>
+          
         </div>
       </motion.div>
     </motion.div>

@@ -21,34 +21,45 @@ const USERNAME = import.meta.env.VITE_GITHUB_USERNAME;
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden pb-28 md:pb-24" style={{ background: 'rgba(var(--background-secondary), 1)' }}>
-      {/* Top shimmer line */}
-      <div className="absolute top-0 left-0 right-0 h-px overflow-hidden">
-        <div className="h-full w-[200%] animate-shimmer" style={{
-          background: 'linear-gradient(90deg, transparent, rgba(var(--accent), 0.3), rgba(var(--accent-secondary), 0.2), transparent)',
-          backgroundSize: '200% 100%',
-        }} />
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-10 pb-6">
-        <div className="flex justify-between items-center flex-wrap gap-4">
-          {/* Left — logo */}
+    <footer className="relative overflow-hidden pb-28 pt-10 border-t border-purple-500/10 bg-[#0b0618]/80">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center md:items-start gap-10">
+        
+        {/* Left Column */}
+        <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm" style={{
-              background: 'linear-gradient(135deg, rgba(var(--accent), 1), rgba(var(--accent-secondary), 1))',
-              color: 'white',
-            }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
               ⚡
             </div>
-            <span className="font-mono text-xs text-text-tertiary">
-              Built with <FiHeart size={10} className="text-accent inline align-middle" /> by {USERNAME}
-            </span>
+            <div className="text-sm font-mono">
+              <span className="text-text-tertiary">Built with <FiHeart size={12} className="inline text-purple-400" /> by</span><br/>
+              <span className="text-purple-300 font-bold">{USERNAME}</span>
+            </div>
           </div>
+          <div className="text-[11px] font-mono text-text-tertiary/60 leading-relaxed">
+            Powered by GitHub API • React + Vite<br/>
+            Data refreshes on every visit
+          </div>
+        </div>
 
-          {/* Right — socials */}
-          <div className="flex gap-2 items-center">
+        {/* Center Column: Graphic */}
+        <div className="flex flex-col items-center justify-center -mt-4 hidden md:flex">
+          <div className="flex items-center gap-2 mb-2 text-purple-500">
+            <div className="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </div>
+            <svg width="60" height="20" viewBox="0 0 60 20" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="opacity-50">
+              <path d="M0,10 Q30,20 60,10" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="-rotate-12"><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </div>
+          <p className="text-sm text-text-tertiary font-medium">Let's create something <span className="text-purple-400">incredible!</span></p>
+        </div>
+
+        {/* Right Column: Socials */}
+        <div className="flex flex-col items-end gap-6">
+          <div className="flex gap-4 items-center">
             {[
-              { href: `https://github.com/${USERNAME}`, icon: <FiGithub size={13}/>, label: 'GitHub' },
+              { href: `https://github.com/${USERNAME}`, icon: <FiGithub size={16}/>, label: 'GitHub' },
               { href: 'https://x.com/ItzSoumyajit', icon: <XIcon/>, label: 'X' },
               { href: 'https://www.linkedin.com/in/itz-soumyajit-soumyajit-saha-413a79337', icon: <LIIcon/>, label: 'LinkedIn' },
               { href: 'https://www.instagram.com/soumyaajitt7/', icon: <IGIcon/>, label: 'Instagram' },
@@ -60,23 +71,17 @@ export default function Footer() {
                 rel="noreferrer" 
                 title={label}
                 whileHover={{ y: -3, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="flex items-center justify-center w-9 h-9 rounded-full border border-border/50 text-text-tertiary hover:text-accent hover:border-accent/30 transition-colors duration-300"
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-purple-500/20 text-text-secondary hover:text-white hover:bg-purple-600/30 transition-all duration-300"
               >
                 {icon}
               </motion.a>
             ))}
           </div>
-        </div>
-
-        <div className="mt-6 pt-4 border-t border-border/30 flex justify-between items-center flex-wrap gap-2">
           <p className="font-mono text-[11px] text-text-tertiary/60">
-            Powered by GitHub API · React + Vite · Data refreshes on every visit
-          </p>
-          <p className="font-mono text-[11px] text-text-tertiary/40">
             © {new Date().getFullYear()} {USERNAME}
           </p>
         </div>
+
       </div>
     </footer>
   );

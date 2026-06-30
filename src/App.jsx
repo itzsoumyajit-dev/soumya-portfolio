@@ -9,6 +9,7 @@ import RepoGrid from './components/RepoGrid';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import CinematicBackground from './components/CinematicBackground';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function CinematicLoader() {
@@ -156,6 +157,7 @@ export default function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
+          <CinematicBackground />
           <Navbar scrollPct={scrollPct} />
 
           <main className="overflow-hidden">

@@ -1,37 +1,6 @@
 import { motion } from 'framer-motion';
-import { FiGithub, FiSend, FiExternalLink, FiFileText } from 'react-icons/fi';
-import { FaLinkedin, FaInstagram, FaTwitter } from 'react-icons/fa';
-
-const SOCIALS = [
-  {
-    label: 'GitHub',
-    handle: '@itzsoumyajit-dev',
-    href: `https://github.com/${import.meta.env.VITE_GITHUB_USERNAME || 'itzsoumyajit-dev'}`,
-    Icon: FiGithub,
-    gradient: 'from-gray-600 to-gray-800',
-  },
-  {
-    label: 'X (Twitter)',
-    handle: '@ItzSoumyajit',
-    href: 'https://x.com/ItzSoumyajit',
-    Icon: FaTwitter,
-    gradient: 'from-blue-400 to-blue-600',
-  },
-  {
-    label: 'LinkedIn',
-    handle: 'Soumyajit Saha',
-    href: 'https://www.linkedin.com/in/itz-soumyajit-soumyajit-saha-413a79337',
-    Icon: FaLinkedin,
-    gradient: 'from-blue-500 to-blue-700',
-  },
-  {
-    label: 'Instagram',
-    handle: '@soumyaajitt7',
-    href: 'https://www.instagram.com/soumyaajitt7/',
-    Icon: FaInstagram,
-    gradient: 'from-pink-500 via-red-500 to-yellow-500',
-  },
-];
+import { FiMail, FiSend, FiMapPin, FiUser, FiTag, FiEdit2 } from 'react-icons/fi';
+import { FaLinkedin } from 'react-icons/fa';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
@@ -43,12 +12,22 @@ const fadeUp = {
 
 export default function Contact({ profile }) {
   return (
-    <section id="contact" className="py-28 md:py-36 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] opacity-20 blur-[120px] pointer-events-none" style={{
-        background: 'radial-gradient(circle, rgba(var(--accent), 0.4), rgba(var(--accent-secondary), 0.2), transparent)',
-      }} />
+    <section id="contact" className="py-28 md:py-36 relative overflow-hidden bg-gradient-to-b from-transparent to-black/60">
+      {/* Cinematic Contact Background Layers */}
       
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      {/* Edge Vignette */}
+      <div className="absolute inset-0 z-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,0.9)]" />
+      
+      {/* Soft Spotlight */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-20 blur-[150px] pointer-events-none bg-purple-500/20 mix-blend-screen" />
+      
+      {/* Purple Fog */}
+      <div className="absolute bottom-0 left-0 w-full h-[500px] opacity-40 pointer-events-none bg-gradient-to-t from-[#0b0618] to-transparent" />
+      
+      {/* Tiny Stars / Particles overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjZmZmIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iMTAiIHI9IjAuNSIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4=')] mix-blend-screen" />
+      
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -56,104 +35,174 @@ export default function Contact({ profile }) {
           className="text-center mb-16"
         >
           <motion.span variants={fadeUp} custom={0} className="glass-badge inline-block px-4 py-1.5 rounded-full font-mono text-sm text-accent tracking-widest uppercase font-semibold mb-6">
-            // contact
+            // contact.me
           </motion.span>
-          <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-6xl font-display font-bold mb-6 leading-[1.1]">
-            Let's Build<br />
-            <span className="hero-gradient-text">Something Great</span>
+          <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-6xl font-display font-bold mb-4">
+            Let's <span className="hero-gradient-text">Connect</span>
           </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
-            Whether it's a cool project, a freelance opportunity, or just a chat about tech — my inbox is always open.
+          <motion.p variants={fadeUp} custom={2} className="text-text-secondary text-lg max-w-2xl mx-auto">
+            Have a project in mind or just want to say hi? I'd love to hear from you.
           </motion.p>
         </motion.div>
 
-        <div className="flex flex-col items-center gap-12">
-          {/* Email CTA */}
-          <motion.a
-            initial={{ opacity: 0, scale: 0.9, filter: 'blur(8px)' }}
-            whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.97 }}
-            href={`mailto:${profile?.email || 'soumyajitsaha@example.com'}`}
-            className="group relative flex items-center gap-3 px-10 py-5 rounded-full font-semibold text-lg overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, rgba(var(--accent), 1), rgba(var(--accent-secondary), 1))',
-              color: 'white',
-              boxShadow: '0 12px 40px rgba(var(--accent), 0.35), inset 0 1px 0 rgba(255,255,255,0.2)',
-            }}
-          >
-            <FiSend size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform duration-300" />
-            <span className="relative z-10">Say Hello</span>
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-          </motion.a>
-
-          {/* Socials — Glass cards */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            {SOCIALS.map(({ label, handle, href, Icon, gradient }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                title={`${label}: ${handle}`}
-                whileHover={{ y: -4, scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="glass-card flex items-center gap-3 px-6 py-3 rounded-full group"
-              >
-                <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white relative z-10`}>
-                  <Icon size={14} />
-                </div>
-                <span className="text-sm font-medium text-text-secondary group-hover:text-text transition-colors duration-300 relative z-10">
-                  {label}
-                </span>
-                <FiExternalLink size={12} className="text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10" />
-              </motion.a>
-            ))}
-          </motion.div>
-
-          {/* Resume */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+          
+          {/* Left Column: Contact Info */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: 0.6 }}
+            className="bg-[#0b0618]/80 border border-purple-500/20 rounded-3xl p-8 md:p-10 flex flex-col"
           >
-            <motion.a
-              href="/Soumyajit_Saha_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ y: -2 }}
-              className="glass-badge flex items-center gap-2 px-5 py-2.5 rounded-full text-text-secondary hover:text-accent font-mono text-sm transition-colors duration-300"
-            >
-              <FiFileText size={16} />
-              View Full Resume
-            </motion.a>
-          </motion.div>
-        </div>
+            <h3 className="text-2xl font-medium text-white mb-1">Let's build something</h3>
+            <h3 className="text-3xl font-bold text-purple-400 mb-6 font-display tracking-wide">amazing together</h3>
+            
+            {/* Squiggly line */}
+            <svg width="60" height="20" viewBox="0 0 60 20" fill="none" className="mb-10 opacity-70">
+              <path d="M0 10 Q 5 0, 10 10 T 20 10 T 30 10 T 40 10 T 50 10" stroke="#a78bfa" strokeWidth="2" fill="none" strokeLinecap="round" />
+              <path d="M0 15 Q 5 5, 10 15 T 20 15 T 30 15 T 40 15 T 50 15" stroke="#a78bfa" strokeWidth="2" fill="none" strokeLinecap="round" className="opacity-50" />
+            </svg>
 
-        {/* Quote — Glass card */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="glass-card mt-28 rounded-2xl p-8 text-center"
-        >
-          <p className="font-serif italic text-text-secondary text-lg mb-2 relative z-10">
-            "Code is like humor. When you have to explain it, it's bad."
-          </p>
-          <p className="font-mono text-xs text-text-tertiary tracking-widest uppercase relative z-10">
-            — Cory House
-          </p>
-        </motion.div>
+            <div className="space-y-8 mt-auto">
+              {/* Email */}
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-xl bg-[#1a103c] border border-purple-500/20 flex items-center justify-center text-purple-300 shrink-0">
+                  <FiMail size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-1">Email</h4>
+                  <a href={`mailto:${profile?.email || 'soumyajit.dev@gmail.com'}`} className="text-text-tertiary text-sm hover:text-purple-400 transition-colors">
+                    {profile?.email || 'soumyajit.dev@gmail.com'}
+                  </a>
+                </div>
+              </div>
+
+              {/* Telegram */}
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-xl bg-[#1a103c] border border-purple-500/20 flex items-center justify-center text-purple-300 shrink-0">
+                  <FiSend size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-1">Telegram</h4>
+                  <a href="https://t.me/itzsoumyajit_dev" target="_blank" rel="noreferrer" className="text-text-tertiary text-sm hover:text-purple-400 transition-colors">
+                    @itzsoumyajit_dev
+                  </a>
+                </div>
+              </div>
+
+              {/* LinkedIn */}
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-xl bg-[#1a103c] border border-purple-500/20 flex items-center justify-center text-purple-300 shrink-0">
+                  <FaLinkedin size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-1">LinkedIn</h4>
+                  <a href="https://linkedin.com/in/itzsoumyajit-dev" target="_blank" rel="noreferrer" className="text-text-tertiary text-sm hover:text-purple-400 transition-colors">
+                    linkedin.com/in/itzsoumyajit-dev
+                  </a>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-xl bg-[#1a103c] border border-purple-500/20 flex items-center justify-center text-purple-300 shrink-0">
+                  <FiMapPin size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-1">Location</h4>
+                  <p className="text-text-tertiary text-sm">
+                    {profile?.location || 'India'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Form (Glassmorphism) */}
+          <motion.div
+            initial={{ opacity: 0, x: 30, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="rounded-3xl p-8 md:p-10 relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] flex flex-col"
+          >
+            {/* Glass top reflection */}
+            <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-2xl font-bold text-white">Send me a message</h3>
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                </span>
+              </div>
+              <p className="text-text-secondary text-sm mb-8">I'll get back to you as soon as possible.</p>
+
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Name Input */}
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-text-tertiary group-focus-within:text-purple-400 transition-colors">
+                      <FiUser size={16} />
+                    </div>
+                    <input 
+                      type="text" 
+                      placeholder="Your Name" 
+                      className="w-full bg-[#100826]/50 border border-purple-500/20 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-text-tertiary focus:outline-none focus:border-purple-500/50 focus:bg-[#100826]/80 transition-all"
+                    />
+                  </div>
+                  {/* Email Input */}
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-text-tertiary group-focus-within:text-purple-400 transition-colors">
+                      <FiMail size={16} />
+                    </div>
+                    <input 
+                      type="email" 
+                      placeholder="Your Email" 
+                      className="w-full bg-[#100826]/50 border border-purple-500/20 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-text-tertiary focus:outline-none focus:border-purple-500/50 focus:bg-[#100826]/80 transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Subject Input */}
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-text-tertiary group-focus-within:text-purple-400 transition-colors">
+                    <FiTag size={16} />
+                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="Subject" 
+                    className="w-full bg-[#100826]/50 border border-purple-500/20 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-text-tertiary focus:outline-none focus:border-purple-500/50 focus:bg-[#100826]/80 transition-all"
+                  />
+                </div>
+
+                {/* Message Input */}
+                <div className="relative group">
+                  <div className="absolute top-4 left-0 pl-4 flex items-start pointer-events-none text-text-tertiary group-focus-within:text-purple-400 transition-colors">
+                    <FiEdit2 size={16} />
+                  </div>
+                  <textarea 
+                    placeholder="Your Message" 
+                    rows={4}
+                    className="w-full bg-[#100826]/50 border border-purple-500/20 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-text-tertiary focus:outline-none focus:border-purple-500/50 focus:bg-[#100826]/80 transition-all resize-none"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button 
+                  type="submit"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-purple-600 text-white font-medium text-sm hover:bg-purple-500 transition-colors shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.5)] active:scale-[0.98]"
+                >
+                  Send Message <FiSend size={16} />
+                </button>
+              </form>
+            </div>
+          </motion.div>
+          
+        </div>
       </div>
     </section>
   );
