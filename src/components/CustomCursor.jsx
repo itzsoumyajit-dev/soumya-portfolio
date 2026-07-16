@@ -56,12 +56,14 @@ export default function CustomCursor() {
     <>
       {/* Inner solid dot (instant tracking) */}
       <motion.div
-        className="fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 w-3 h-3 rounded-full pointer-events-none z-[9999] hidden md:block"
         style={{
           x: cursorX,
           y: cursorY,
           translateX: '-50%',
           translateY: '-50%',
+          backgroundColor: '#A58CFF',
+          boxShadow: '0 0 10px 2px rgba(165, 140, 255, 0.6)'
         }}
         animate={{
           scale: isHovering ? 0 : 1,
@@ -72,19 +74,22 @@ export default function CustomCursor() {
       
       {/* Outer spring ring (trailing effect) */}
       <motion.div
-        className="fixed top-0 left-0 w-12 h-12 border border-white rounded-full pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center hidden md:block"
+        className="fixed top-0 left-0 w-12 h-12 rounded-full pointer-events-none z-[9998] flex items-center justify-center hidden md:block"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
           translateX: '-50%',
           translateY: '-50%',
+          border: '1.5px solid rgba(165, 140, 255, 0.5)',
+          backdropFilter: 'blur(2px)',
         }}
         animate={{
           scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? 'rgba(255,255,255,0.15)' : 'transparent',
+          backgroundColor: isHovering ? 'rgba(165, 140, 255, 0.15)' : 'transparent',
+          borderColor: isHovering ? 'rgba(165, 140, 255, 0.8)' : 'rgba(165, 140, 255, 0.5)',
           opacity: isVisible ? 1 : 0
         }}
-        transition={{ scale: { type: 'spring', stiffness: 300, damping: 20 }, backgroundColor: { duration: 0.2 }, opacity: { duration: 0.15 } }}
+        transition={{ scale: { type: 'spring', stiffness: 300, damping: 20 }, backgroundColor: { duration: 0.2 }, borderColor: { duration: 0.2 }, opacity: { duration: 0.15 } }}
       />
     </>
   );

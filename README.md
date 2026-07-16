@@ -66,16 +66,17 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 
 | &nbsp; | Feature | Description |
 |:---:|---|---|
-| 🍱 | **Premium Bento Grid** | Structural, non-overlapping floating dashboard layout in the hero section |
+| 🌌 | **Cinematic Background** | Interactive WebGL fluid aurora shader reacting dynamically to scroll |
 | 🪟 | **Cyber-Glass UI** | Transparent frosted glass components with liquid borders and dynamic lighting |
+| 💊 | **Limelight Navigation** | Adaptive pill-based scroll-spy navbar with floating highlight animations |
+| 🍱 | **Premium Bento Grid** | Structural, non-overlapping floating dashboard layout in the hero section |
+| 🖱️ | **Neon Magnetic Cursor** | Buttery smooth framer-motion cursor with glowing indigo aura and glass blur |
 | 🎬 | **Cinematic Loading** | Smooth animated loading screen that gracefully fades into the portfolio |
-| 🖱️ | **Magnetic Cursor** | Custom interactive framer-motion cursor that snaps to interactive elements |
 | 🌙☀️ | **Dynamic Themes** | Beautiful Light and Dark modes with automatic adaptive color grading |
 | 📊 | **Live GitHub Stats** | Stars, forks, followers — fetched fresh from GitHub API on every visit |
 | 🃏 | **Repo Cards** | Top repositories automatically sorted by stars with tech stack badges |
 | 🥧 | **Language Chart** | Interactive Recharts donut chart showing your entire tech stack breakdown |
 | 🎞️ | **Scroll Animations** | Silky smooth scroll reveals driven by Framer Motion & Intersection Observers |
-| 📱 | **Fully Responsive** | Carefully tailored grid layouts for mobile, tablet, and ultra-wide screens |
 | ⚡ | **Blazing Fast Build** | Vite compiles the entire application in just seconds |
 
 </div>
@@ -94,8 +95,9 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)&nbsp;
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-### 🎭 Animation & Layout
+### 🎭 Animation & Graphics
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)&nbsp;
+![WebGL](https://img.shields.io/badge/WebGL-990000?style=for-the-badge&logo=webgl&logoColor=white)&nbsp;
 ![CSS3](https://img.shields.io/badge/CSS3_Grid_&_Flexbox-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
 ### 📡 Data & Libraries
@@ -120,14 +122,18 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 ├── 📂 src/
 │   │
 │   ├── 📂 components/
+│   │   ├── 📂 ui/
+│   │   │   └── 💊  limelight-nav.tsx # Reusable adaptive nav component
+│   │   │
+│   │   ├── 🌌  CinematicBackground.jsx # WebGL animated fluid aurora shader
 │   │   ├── 🦸  Hero.jsx              # Premium Bento Grid hero section
-│   │   ├── 🔗  Navbar.jsx            # Transparent frosted glass navigation
+│   │   ├── 🔗  Navbar.jsx            # Limelight adaptive pill navigation wrapper
 │   │   ├── 🎯  About.jsx             # About section & skills
 │   │   ├── 📊  GitHubStats.jsx       # Live GitHub stat cards
 │   │   ├── 🃏  RepoGrid.jsx          # Repository cards
 │   │   ├── 🥧  LanguageChart.jsx     # Tech stack donut chart
 │   │   ├── 📬  Contact.jsx           # Animated social links
-│   │   ├── 🖱️  CustomCursor.jsx      # Magnetic framer-motion cursor
+│   │   ├── 🖱️  CustomCursor.jsx      # Magnetic neon framer-motion cursor
 │   │   └── 🌙  ThemeToggle.jsx       # Adaptive dark/light mode toggle
 │   │
 │   ├── 📂 hooks/
