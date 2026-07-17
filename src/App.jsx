@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import GitHubStats from './components/GitHubStats';
 import RepoGrid from './components/RepoGrid';
+import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -165,6 +166,7 @@ export default function App() {
             <About profile={profile} />
             <GitHubStats profile={profile} repos={repos} />
             <RepoGrid repos={repos} />
+            <Certificates />
             <Contact profile={profile} />
           </main>
 

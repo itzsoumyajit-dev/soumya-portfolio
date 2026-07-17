@@ -4,7 +4,8 @@ import {
   HiOutlineUser,
   HiOutlineChartBar,
   HiOutlineFolder,
-  HiOutlineEnvelope
+  HiOutlineEnvelope,
+  HiOutlineTrophy
 } from 'react-icons/hi2';
 import { LimelightNav } from './ui/limelight-nav';
 
@@ -12,7 +13,7 @@ export default function Navbar({ scrollPct }) {
   const [active, setActive] = useState('home');
 
   useEffect(() => {
-    const ids = ['home', 'about', 'stats', 'repos', 'contact'];
+    const ids = ['home', 'about', 'stats', 'repos', 'certificates', 'contact'];
     const obs = new IntersectionObserver(
       entries => {
         entries.forEach(e => {
@@ -39,6 +40,7 @@ export default function Navbar({ scrollPct }) {
     { id: 'about', label: 'About', icon: <HiOutlineUser size={22} /> },
     { id: 'stats', label: 'Stats', icon: <HiOutlineChartBar size={22} /> },
     { id: 'repos', label: 'Projects', icon: <HiOutlineFolder size={22} /> },
+    { id: 'certificates', label: 'Certs', icon: <HiOutlineTrophy size={22} /> },
     { id: 'contact', label: 'Contact', icon: <HiOutlineEnvelope size={22} /> },
   ];
 

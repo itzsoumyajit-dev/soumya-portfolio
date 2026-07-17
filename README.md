@@ -4,7 +4,7 @@
 
 <br/>
 
-<a href="https://soumya-portfolio-hoot6p7s2-itzsoumyajit-devs-projects.vercel.app">
+<a href="https://soumya-portfolio-opal.vercel.app">
   <img src="https://img.shields.io/badge/🌐%20Live%20Demo-Visit%20Portfolio-38bdf8?style=for-the-badge&labelColor=0f0c29" alt="Live Demo"/>
 </a>
 &nbsp;
@@ -52,7 +52,7 @@
 
 </div>
 
-> 🚀 **[→ Visit the Live Portfolio](https://soumya-portfolio-hoot6p7s2-itzsoumyajit-devs-projects.vercel.app)**
+> 🚀 **[→ Visit the Live Portfolio](https://soumya-portfolio-opal.vercel.app)**
 
 A **cinematic, fully responsive developer portfolio** powered by the **GitHub API** — featuring a stunning **Cyber-Glassmorphism** aesthetic, a robust Bento Grid layout, real-time stats, and silky smooth animations. Built to make a lasting premium first impression.
 
@@ -76,7 +76,8 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 | 📊 | **Live GitHub Stats** | Stars, forks, followers — fetched fresh from GitHub API on every visit |
 | 🃏 | **Repo Cards** | Top repositories automatically sorted by stars with tech stack badges |
 | 🥧 | **Language Chart** | Interactive Recharts donut chart showing your entire tech stack breakdown |
-| 🎞️ | **Scroll Animations** | Silky smooth scroll reveals driven by Framer Motion & Intersection Observers |
+| 🏆 | **Certificates Showcase** | Professional credentials displayed with interactive glassmorphic hover effects |
+| 🎞️ | **Scroll Animations** | Silky smooth scroll reveals driven by Framer Motion, GSAP & Intersection Observers |
 | ⚡ | **Blazing Fast Build** | Vite compiles the entire application in just seconds |
 
 </div>
@@ -97,6 +98,8 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 
 ### 🎭 Animation & Graphics
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)&nbsp;
+![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)&nbsp;
+![Lenis](https://img.shields.io/badge/Lenis_Scroll-000000?style=for-the-badge)&nbsp;
 ![WebGL](https://img.shields.io/badge/WebGL-990000?style=for-the-badge&logo=webgl&logoColor=white)&nbsp;
 ![CSS3](https://img.shields.io/badge/CSS3_Grid_&_Flexbox-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
@@ -131,6 +134,7 @@ A **cinematic, fully responsive developer portfolio** powered by the **GitHub AP
 │   │   ├── 🎯  About.jsx             # About section & skills
 │   │   ├── 📊  GitHubStats.jsx       # Live GitHub stat cards
 │   │   ├── 🃏  RepoGrid.jsx          # Repository cards
+│   │   ├── 🏆  Certificates.jsx      # Professional certifications & credentials
 │   │   ├── 🥧  LanguageChart.jsx     # Tech stack donut chart
 │   │   ├── 📬  Contact.jsx           # Animated social links
 │   │   ├── 🖱️  CustomCursor.jsx      # Magnetic neon framer-motion cursor

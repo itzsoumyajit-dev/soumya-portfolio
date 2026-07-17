@@ -285,55 +285,67 @@ void main(){gl_Position=position;}`;
   return canvasRef;
 };
 
-// Shader source adapted for a modern purple/aurora gradient to match the screenshot theme
+// Shader source: cosmic clouds/nebula — adapted with purple palette
 const shaderSource = `#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
 precision highp float;
 out vec4 O;
 uniform vec2 resolution;
 uniform float time;
-
 #define FC gl_FragCoord.xy
-#define T (time * 0.3)
+#define T time
 #define R resolution
-
+#define MN min(R.x,R.y)
+float rnd(vec2 p) {
+  p=fract(p*vec2(12.9898,78.233));
+  p+=dot(p,p+34.56);
+  return fract(p.x*p.y);
+}
+float noise(in vec2 p) {
+  vec2 i=floor(p), f=fract(p), u=f*f*(3.-2.*f);
+  float
+  a=rnd(i),
+  b=rnd(i+vec2(1,0)),
+  c=rnd(i+vec2(0,1)),
+  d=rnd(i+1.);
+  return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+}
+float fbm(vec2 p) {
+  float t=.0, a=1.; mat2 m=mat2(1.,-.5,.2,1.2);
+  for (int i=0; i<5; i++) {
+    t+=a*noise(p);
+    p*=2.*m;
+    a*=.5;
+  }
+  return t;
+}
+float clouds(vec2 p) {
+  float d=1., t=.0;
+  for (float i=.0; i<3.; i++) {
+    float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);
+    t=mix(t,d,a);
+    d=a;
+    p*=2./(i+1.);
+  }
+  return t;
+}
 void main(void) {
-    // Normalize pixel coordinates
-    vec2 uv = FC.xy / R.xy;
-    vec2 p = uv * 2.0 - 1.0;
-    p.x *= R.x / R.y;
-    
-    // Fluid distortion loop
-    for(float i = 1.0; i < 6.0; i++) {
-        p.x += 0.3 / i * cos(i * 2.0 * p.y + T);
-        p.y += 0.3 / i * cos(i * 1.5 * p.x + T);
-    }
-    
-    // Base dark color (deep purple/blue)
-    vec3 col = vec3(0.05, 0.02, 0.1);
-    
-    // Mix fluid colors 
-    float c1 = sin(p.x + T) * 0.5 + 0.5;
-    float c2 = cos(p.y - T * 0.8) * 0.5 + 0.5;
-    float c3 = sin(p.x - p.y + T * 1.2) * 0.5 + 0.5;
-    
-    // Violet and purple shades to match the screenshot
-    vec3 color1 = vec3(0.4, 0.1, 0.8); // Deep Violet
-    vec3 color2 = vec3(0.2, 0.1, 0.6); // Indigo
-    vec3 color3 = vec3(0.6, 0.2, 0.9); // Bright Purple
-    
-    col = mix(col, color1, c1 * 0.5);
-    col = mix(col, color2, c2 * 0.4);
-    col = mix(col, color3, c3 * 0.6);
-    
-    // Highlight glows at the center
-    float glow = exp(-length(p) * 1.2);
-    col += vec3(0.5, 0.2, 0.9) * glow * 0.4; // Center purple glow
-    
-    // Add subtle vignette
-    float v = 1.0 - length((FC.xy - 0.5 * R) / R);
-    col *= v * v * 1.5;
-    
-    O = vec4(col, 1.0);
+  vec2 uv=(FC-.5*R)/MN,st=uv*vec2(2,1);
+  vec3 col=vec3(0);
+  float bg=clouds(vec2(st.x+T*.5,-st.y));
+  uv*=1.-.3*(sin(T*.2)*.5+.5);
+  for (float i=1.; i<12.; i++) {
+    uv+=.1*cos(i*vec2(.1+.01*i, .8)+i*i+T*.5+.1*uv.x);
+    vec2 p=uv;
+    float d=length(p);
+    col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);
+    float b=noise(i+p+bg*1.731);
+    col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
+    col=mix(col,vec3(bg*.15,bg*.05,bg*.25),d);
+  }
+  O=vec4(col,1);
 }`;
 
 export default function CinematicBackground() {
