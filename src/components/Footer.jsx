@@ -21,18 +21,18 @@ const USERNAME = import.meta.env.VITE_GITHUB_USERNAME;
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden pb-28 pt-10 border-t border-purple-500/10 bg-[#0b0618]/80">
+    <footer className="relative overflow-hidden pb-28 pt-10 border-t border-orange-500/10 bg-[#0f0803]/80">
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center md:items-start gap-10">
         
         {/* Left Column */}
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.4)]">
               ⚡
             </div>
             <div className="text-sm font-mono">
-              <span className="text-text-tertiary">Built with <FiHeart size={12} className="inline text-purple-400" /> by</span><br/>
-              <span className="text-purple-300 font-bold">{USERNAME}</span>
+              <span className="text-text-tertiary">Built with <FiHeart size={12} className="inline text-orange-400" /> by</span><br/>
+              <span className="text-orange-300 font-bold">{USERNAME}</span>
             </div>
           </div>
           <div className="text-[11px] font-mono text-text-tertiary/60 leading-relaxed">
@@ -43,8 +43,8 @@ export default function Footer() {
 
         {/* Center Column: Graphic */}
         <div className="flex flex-col items-center justify-center -mt-4 hidden md:flex">
-          <div className="flex items-center gap-2 mb-2 text-purple-500">
-            <div className="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+          <div className="flex items-center gap-2 mb-2 text-orange-500">
+            <div className="w-10 h-10 rounded-xl bg-orange-600/20 border border-orange-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.2)]">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </div>
             <svg width="60" height="20" viewBox="0 0 60 20" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="opacity-50">
@@ -52,7 +52,7 @@ export default function Footer() {
             </svg>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="-rotate-12"><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </div>
-          <p className="text-sm text-text-tertiary font-medium">Let's create something <span className="text-purple-400">incredible!</span></p>
+          <p className="text-sm text-text-tertiary font-medium">Let's create something <span className="text-orange-400">incredible!</span></p>
         </div>
 
         {/* Right Column: Socials */}
@@ -71,7 +71,7 @@ export default function Footer() {
                 rel="noreferrer" 
                 title={label}
                 whileHover={{ y: -3, scale: 1.1 }}
-                className="flex items-center justify-center w-10 h-10 rounded-full border border-purple-500/20 text-text-secondary hover:text-white hover:bg-purple-600/30 transition-all duration-300"
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-orange-500/20 text-text-secondary hover:text-white hover:bg-orange-600/30 transition-all duration-300"
               >
                 {icon}
               </motion.a>

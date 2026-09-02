@@ -46,8 +46,8 @@ export default function CinematicBackground() {
         />
         
         {/* Ambient Purple Glow Overlays to keep the vibes */}
-        <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-purple-600/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-indigo-600/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-orange-600/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-amber-600/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none" />
 
       </motion.div>
     </div>

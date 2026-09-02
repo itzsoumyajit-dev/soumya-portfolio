@@ -44,7 +44,7 @@ export default function Hero({ profile }) {
 
       {/* Dot grid pattern overlay — visible on the right side like the design */}
       <div className="absolute inset-0 z-0 pointer-events-none" style={{
-        backgroundImage: 'radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px)',
+        backgroundImage: 'radial-gradient(rgba(249, 115, 22, 0.12) 1px, transparent 1px)',
         backgroundSize: '24px 24px',
       }} />
 
@@ -91,8 +91,8 @@ export default function Hero({ profile }) {
         >
           {/* Status Badge */}
           <motion.div variants={itemVariants} className="flex items-center gap-3 px-5 py-2.5 rounded-full mb-8 shadow-sm" style={{
-            background: 'rgba(139, 92, 246, 0.1)',
-            border: '1px solid rgba(139, 92, 246, 0.25)',
+            background: 'rgba(249, 115, 22, 0.1)',
+            border: '1px solid rgba(249, 115, 22, 0.25)',
             backdropFilter: 'blur(20px)',
           }}>
             <span className="relative flex h-2.5 w-2.5">
@@ -108,10 +108,10 @@ export default function Hero({ profile }) {
           <motion.h1 variants={itemVariants} className="font-sans text-6xl md:text-8xl lg:text-8xl font-black mb-6 leading-[1.02] tracking-tighter">
             <span className="block text-white">Crafting</span>
             <span className="block relative">
-              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-400">Digital</span>
-              <span className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-400 blur-[20px] opacity-50" aria-hidden="true">Digital</span>
+              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">Digital</span>
+              <span className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400 blur-[20px] opacity-50" aria-hidden="true">Digital</span>
             </span>
-            <span className="block text-white">Experiences<span className="text-purple-400 font-black">.</span></span>
+            <span className="block text-white">Experiences<span className="text-orange-400 font-black">.</span></span>
           </motion.h1>
 
           {/* Bio */}
@@ -125,7 +125,7 @@ export default function Hero({ profile }) {
               href="#repos"
               className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-95 text-white"
               style={{
-                background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%)',
+                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%)',
                 boxShadow: '0 0 25px rgba(124, 58, 237, 0.5), 0 8px 20px rgba(124, 58, 237, 0.3)',
                 border: '1px solid rgba(167, 139, 250, 0.4)',
               }}
@@ -138,14 +138,14 @@ export default function Hero({ profile }) {
               href="/Soumyajit_Saha_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold hover:bg-purple-900/30 transition-colors"
+              className="flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-semibold hover:bg-orange-900/30 transition-colors"
               style={{
                 background: 'rgba(11, 5, 29, 0.6)',
-                border: '1px solid rgba(139, 92, 246, 0.3)',
+                border: '1px solid rgba(249, 115, 22, 0.3)',
                 boxShadow: '0 0 15px rgba(124, 58, 237, 0.1)',
               }}
             >
-              <FiFileText size={18} className="text-purple-300" />
+              <FiFileText size={18} className="text-orange-300" />
               <span className="font-sans tracking-wide">Resume</span>
             </a>
           </motion.div>
@@ -160,7 +160,7 @@ export default function Hero({ profile }) {
         >
           {/* 1. Main Profile Card (Spans 2 Rows) */}
           <motion.div 
-            className="col-span-1 row-span-2 p-6 rounded-3xl z-20 flex flex-col items-center justify-center gap-5 relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="col-span-1 row-span-2 p-6 rounded-3xl z-20 flex flex-col items-center justify-center gap-5 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
@@ -168,30 +168,30 @@ export default function Hero({ profile }) {
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
             <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full blur-md opacity-60 animate-pulse-glow" />
+              <div className="absolute -inset-1 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full blur-md opacity-60 animate-pulse-glow" />
               <img
                 src={profile.avatar_url || 'https://github.com/identicons/default.png'}
                 alt={profile.name || 'Developer'}
-                className="relative z-10 w-32 h-32 rounded-full border-2 border-purple-400/50 object-cover bg-background"
+                className="relative z-10 w-32 h-32 rounded-full border-2 border-orange-400/50 object-cover bg-background"
               />
-              <div className="absolute bottom-2 right-2 w-4 h-4 rounded-full bg-emerald-400 border-2 border-[#100826] z-20 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+              <div className="absolute bottom-2 right-2 w-4 h-4 rounded-full bg-emerald-400 border-2 border-[#1a0f05] z-20 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
             </div>
             <div className="text-center w-full">
               <div className="font-bold text-xl text-white truncate">{profile.name}</div>
-              <div className="text-sm text-purple-300 font-mono truncate">@{profile.login}</div>
+              <div className="text-sm text-orange-300 font-mono truncate">@{profile.login}</div>
             </div>
           </motion.div>
 
           {/* 2. Repositories */}
           <motion.div 
-            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
             <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-purple-400 bg-purple-500/20 shadow-[inset_0_0_0_1px_rgba(168,85,247,0.35)]">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-orange-400 bg-orange-500/20 shadow-[inset_0_0_0_1px_rgba(249,115,22,0.35)]">
                 <FiBookOpen size={20} />
               </div>
               <div className="text-xs text-white uppercase tracking-wider font-semibold">Repos</div>
@@ -201,14 +201,14 @@ export default function Hero({ profile }) {
 
           {/* 3. Followers */}
           <motion.div 
-            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
             <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-purple-400 bg-purple-500/20 shadow-[inset_0_0_0_1px_rgba(168,85,247,0.35)]">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-orange-400 bg-orange-500/20 shadow-[inset_0_0_0_1px_rgba(249,115,22,0.35)]">
                 <FiUsers size={20} />
               </div>
               <div className="text-xs text-white uppercase tracking-wider font-semibold">Followers</div>
@@ -218,7 +218,7 @@ export default function Hero({ profile }) {
 
           {/* 4. Code Snippet (Spans 2 Columns) */}
           <motion.div 
-            className="col-span-2 p-6 rounded-3xl z-10 relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="col-span-2 p-6 rounded-3xl z-10 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
             whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
@@ -229,8 +229,8 @@ export default function Hero({ profile }) {
               <div className="w-3 h-3 rounded-full bg-yellow-500/90" />
               <div className="w-3 h-3 rounded-full bg-green-500/90" />
             </div>
-            <pre className="text-sm font-mono leading-relaxed text-purple-100 overflow-hidden">
-              <span className="text-purple-400">const</span> <span className="text-purple-300">developer</span> = {'{'} <br/>
+            <pre className="text-sm font-mono leading-relaxed text-orange-100 overflow-hidden">
+              <span className="text-orange-400">const</span> <span className="text-orange-300">developer</span> = {'{'} <br/>
               &nbsp;&nbsp;role: <span className="text-emerald-400">'Full Stack'</span>,<br/>
               &nbsp;&nbsp;passion: <span className="text-emerald-400">'UI/UX'</span>,<br/>
               &nbsp;&nbsp;status: <span className="text-emerald-400">'Online'</span><br/>

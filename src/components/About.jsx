@@ -9,7 +9,7 @@ const TIMELINE = [
 
 const FACTS = [
   { icon: FiCoffee, label: 'Coffee Cups', value: '∞', gradient: 'from-amber-500 to-orange-500' },
-  { icon: FiCode, label: 'Lines of Code', value: '50K+', gradient: 'from-indigo-500 to-violet-500' },
+  { icon: FiCode, label: 'Lines of Code', value: '50K+', gradient: 'from-amber-500 to-violet-500' },
   { icon: FiGithub, label: 'Commits', value: '500+', gradient: 'from-emerald-500 to-teal-500' },
   { icon: FiAward, label: 'Projects', value: '20+', gradient: 'from-violet-500 to-pink-500' },
 ];
@@ -29,9 +29,9 @@ export default function About({ profile }) {
     <section id="about" className="py-28 md:py-36 relative z-10 overflow-hidden">
       {/* Cinematic About Background Layers */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-black/10 backdrop-blur-[2px]" />
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 bg-gradient-to-b from-transparent via-[#0b0618]/30 to-[#0b0618]/50" />
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 bg-gradient-to-b from-transparent via-[#0f0803]/30 to-[#0f0803]/50" />
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] mix-blend-overlay" />
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/10 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
         <motion.div
@@ -59,7 +59,7 @@ export default function About({ profile }) {
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 rounded-3xl p-8 md:p-10 group relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="lg:col-span-7 rounded-3xl p-8 md:p-10 group relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
           >
             {/* Glass top reflection */}
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -112,7 +112,7 @@ export default function About({ profile }) {
                 key={fact.label}
                 whileHover={{ y: -6, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="rounded-3xl p-6 flex flex-col items-center justify-center text-center group cursor-default relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                className="rounded-3xl p-6 flex flex-col items-center justify-center text-center group cursor-default relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
               >
                 <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                 <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
@@ -157,7 +157,7 @@ export default function About({ profile }) {
                   <motion.div 
                     whileHover={{ x: 4 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="rounded-2xl p-6 cursor-default relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                    className="rounded-2xl p-6 cursor-default relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
                   >
                     <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                     <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />

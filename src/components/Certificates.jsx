@@ -58,7 +58,7 @@ const certificates = [
     year: '2026',
     link: '/certificate_Python_Microsoft_India.pdf',
     icon: SiPython,
-    gradient: 'from-indigo-500 to-violet-500',
+    gradient: 'from-amber-500 to-violet-500',
     glowColor: 'rgba(99,102,241,0.35)',
   },
 ];
@@ -92,8 +92,8 @@ export default function Certificates() {
     <section id="certificates" className="py-28 md:py-36 relative z-10 overflow-hidden">
       {/* Section Background Layers */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-black/10 backdrop-blur-[2px]" />
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 bg-gradient-to-b from-transparent via-[#0b0618]/30 to-[#0b0618]/50" />
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/10 to-transparent" />
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 bg-gradient-to-b from-transparent via-[#0f0803]/30 to-[#0f0803]/50" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
         {/* Section Header */}
@@ -152,11 +152,11 @@ function CertCard({ num, title, provider, desc, year, link, icon: Icon, gradient
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
       className="group block rounded-3xl p-6 md:p-7 relative overflow-hidden no-underline
-        bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10
+        bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10
         backdrop-blur-[60px] backdrop-saturate-200
-        border border-purple-500/30
+        border border-orange-500/30
         shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]
-        hover:border-purple-400/50
+        hover:border-orange-400/50
         hover:shadow-[0_25px_60px_rgba(0,0,0,0.35),0_0_40px_var(--cert-glow),inset_0_1px_0_rgba(255,255,255,0.15)]
         transition-shadow duration-500 cursor-pointer"
       style={{ '--cert-glow': glowColor, textDecoration: 'none', color: 'inherit' }}

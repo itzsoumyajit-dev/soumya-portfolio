@@ -41,7 +41,7 @@ export default function GitHubStats({ profile, repos }) {
   const totalForks = repos.reduce((s, r) => s + (r.forks_count || 0), 0);
 
   const stats = [
-    { icon: FiCode, label: 'Repositories', value: profile.public_repos || 0, gradient: 'from-indigo-500 to-violet-500', stroke: 'stroke-indigo-500', path: 'M0,15 Q10,2 20,12 T40,15 T60,5 T80,18 T100,10' },
+    { icon: FiCode, label: 'Repositories', value: profile.public_repos || 0, gradient: 'from-amber-500 to-violet-500', stroke: 'stroke-amber-500', path: 'M0,15 Q10,2 20,12 T40,15 T60,5 T80,18 T100,10' },
     { icon: FiStar, label: 'Total Stars', value: totalStars, gradient: 'from-amber-400 to-orange-500', stroke: 'stroke-amber-400', path: 'M0,18 Q15,5 30,12 T60,18 T85,5 T100,12' },
     { icon: FiGitBranch, label: 'Total Forks', value: totalForks, gradient: 'from-emerald-400 to-teal-500', stroke: 'stroke-emerald-400', path: 'M0,12 Q12,20 25,10 T50,15 T75,5 T100,15' },
     { icon: FiUsers, label: 'Followers', value: profile.followers || 0, gradient: 'from-violet-500 to-pink-500', stroke: 'stroke-pink-500', path: 'M0,10 Q15,18 30,8 T65,18 T85,5 T100,12' },
@@ -50,8 +50,8 @@ export default function GitHubStats({ profile, repos }) {
   return (
     <section id="stats" className="py-28 md:py-36 relative z-10 overflow-hidden">
       {/* Cinematic Stats Background Layers */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-50 bg-gradient-to-t from-transparent via-[#0b0618]/40 to-[#0b0618]/80" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] opacity-30 pointer-events-none bg-purple-600/20 blur-[150px] mix-blend-screen rounded-full" />
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-50 bg-gradient-to-t from-transparent via-[#0f0803]/40 to-[#0f0803]/80" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[600px] opacity-30 pointer-events-none bg-orange-600/20 blur-[150px] mix-blend-screen rounded-full" />
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8Y2lyY2xlIGN4PSI0IiBjeT0iNCIgcj0iMiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4=')] mix-blend-overlay" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
@@ -79,7 +79,7 @@ export default function GitHubStats({ profile, repos }) {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -8, scale: 1.03 }}
-              className="rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center text-center group cursor-default relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+              className="rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center text-center group cursor-default relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
             >
               <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
               <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
@@ -110,7 +110,7 @@ export default function GitHubStats({ profile, repos }) {
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-3xl p-8 md:p-10 flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
+          className="rounded-3xl p-8 md:p-10 flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
         >
           {/* Glass top reflection */}
           <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -118,7 +118,7 @@ export default function GitHubStats({ profile, repos }) {
           
           <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between mb-10 relative z-10 gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-600 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] flex items-center justify-center text-white shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-orange-600 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] flex items-center justify-center text-white shrink-0">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
               </div>
               <div className="text-left">
@@ -126,7 +126,7 @@ export default function GitHubStats({ profile, repos }) {
                 <p className="text-sm text-text-tertiary">Every square represents a day. Darker the color, more the contributions.</p>
               </div>
             </div>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#100826]/80 border border-purple-500/20 text-sm text-text-secondary hover:text-white transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1a0f05]/80 border border-orange-500/20 text-sm text-text-secondary hover:text-white transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
               Last 12 months
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -150,9 +150,9 @@ export default function GitHubStats({ profile, repos }) {
           </div>
 
           <div className="w-full flex justify-end mt-4 relative z-10">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#100826]/80 border border-purple-500/20 text-sm font-medium">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1a0f05]/80 border border-orange-500/20 text-sm font-medium">
               <span className="text-orange-500">🔥</span>
-              <span className="text-purple-300">Longest streak:</span>
+              <span className="text-orange-300">Longest streak:</span>
               <span className="text-white">12 days</span>
             </div>
           </div>

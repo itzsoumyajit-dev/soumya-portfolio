@@ -27,15 +27,15 @@ export default function RepoGrid({ repos }) {
   return (
     <section id="repos" className="py-28 md:py-36 relative z-10 overflow-hidden">
       {/* Cinematic Projects Background Layers */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60 bg-gradient-to-b from-[#0b0618]/80 via-[#100826]/70 to-[#0b0618]/90 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60 bg-gradient-to-b from-[#0f0803]/80 via-[#1a0f05]/70 to-[#0f0803]/90 backdrop-blur-[2px]" />
       
       {/* Soft Fog & Lighting */}
-      <div className="absolute top-1/4 left-0 w-full h-[300px] opacity-20 pointer-events-none bg-purple-600/30 blur-[100px] mix-blend-screen" />
-      <div className="absolute bottom-1/4 right-0 w-full h-[400px] opacity-10 pointer-events-none bg-indigo-500/20 blur-[120px] mix-blend-screen" />
+      <div className="absolute top-1/4 left-0 w-full h-[300px] opacity-20 pointer-events-none bg-orange-600/30 blur-[100px] mix-blend-screen" />
+      <div className="absolute bottom-1/4 right-0 w-full h-[400px] opacity-10 pointer-events-none bg-amber-500/20 blur-[120px] mix-blend-screen" />
       
       {/* Floating abstract rings local to this section */}
-      <div className="absolute top-10 left-10 w-[500px] h-[500px] rounded-full border-[1px] border-purple-500/10 opacity-20" />
-      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] rounded-full border-[1px] border-indigo-500/5 opacity-10" />
+      <div className="absolute top-10 left-10 w-[500px] h-[500px] rounded-full border-[1px] border-orange-500/10 opacity-20" />
+      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] rounded-full border-[1px] border-amber-500/5 opacity-10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
         <motion.div
@@ -111,7 +111,7 @@ function RepoCard({ repo, delay, onClick }) {
       <motion.div 
         whileHover={{ y: -8, scale: 1.01 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="rounded-3xl p-6 md:p-8 h-full flex flex-col relative overflow-hidden bg-gradient-to-br from-purple-500/15 via-[#100826]/40 to-purple-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-purple-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+        className="rounded-3xl p-6 md:p-8 h-full flex flex-col relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
       >
         {/* Glass top reflection */}
         <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -123,10 +123,10 @@ function RepoCard({ repo, delay, onClick }) {
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-600 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-12 h-12 rounded-xl bg-orange-600 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)] flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform duration-300">
                 {getRepoIcon(repo.name)}
               </div>
-              <h3 className="font-display font-bold text-xl text-white group-hover:text-purple-300 transition-colors duration-300 line-clamp-1">
+              <h3 className="font-display font-bold text-xl text-white group-hover:text-orange-300 transition-colors duration-300 line-clamp-1">
                 {repo.name}
               </h3>
             </div>
@@ -135,7 +135,7 @@ function RepoCard({ repo, delay, onClick }) {
               target="_blank" 
               rel="noreferrer" 
               onClick={(e) => e.stopPropagation()}
-              className="w-10 h-10 rounded-full bg-[#100826]/50 border border-purple-500/20 flex items-center justify-center text-white hover:bg-purple-500 hover:border-purple-500 transition-all duration-300 shrink-0"
+              className="w-10 h-10 rounded-full bg-[#1a0f05]/50 border border-orange-500/20 flex items-center justify-center text-white hover:bg-orange-500 hover:border-orange-500 transition-all duration-300 shrink-0"
             >
               <FiGithub size={18} />
             </a>
@@ -149,13 +149,13 @@ function RepoCard({ repo, delay, onClick }) {
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-6">
             {repo.language && (
-              <span className="glass-badge px-3 py-1.5 rounded-xl font-mono text-[11px] text-accent font-medium flex items-center gap-1.5 bg-[#100826]/50 border border-purple-500/20">
+              <span className="glass-badge px-3 py-1.5 rounded-xl font-mono text-[11px] text-accent font-medium flex items-center gap-1.5 bg-[#1a0f05]/50 border border-orange-500/20">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: lc, boxShadow: `0 0 8px ${lc}80` }} />
                 {repo.language}
               </span>
             )}
             {repo.topics?.slice(0, 3).map(t => (
-              <span key={t} className="glass-badge px-3 py-1.5 rounded-xl font-mono text-[11px] text-accent font-medium bg-[#100826]/50 border border-purple-500/20">
+              <span key={t} className="glass-badge px-3 py-1.5 rounded-xl font-mono text-[11px] text-accent font-medium bg-[#1a0f05]/50 border border-orange-500/20">
                 {t}
               </span>
             ))}

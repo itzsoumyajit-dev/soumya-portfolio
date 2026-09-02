@@ -4,41 +4,41 @@
 
 @layer base {
   :root {
-    --background: 248, 248, 255;
-    --background-secondary: 240, 240, 255;
-    --background-tertiary: 225, 225, 250;
+    --background: 255, 250, 245;
+    --background-secondary: 255, 245, 235;
+    --background-tertiary: 250, 235, 220;
     
-    --text-primary: 25, 20, 65;
-    --text-secondary: 65, 60, 120;
-    --text-tertiary: 105, 100, 160;
+    --text-primary: 45, 25, 10;
+    --text-secondary: 85, 50, 25;
+    --text-tertiary: 140, 90, 50;
     
-    --accent: 110, 95, 230;
-    --accent-secondary: 130, 105, 245;
-    --accent-tertiary: 155, 130, 255;
-    --border: 225, 225, 250;
+    --accent: 249, 115, 22;      /* orange-500 */
+    --accent-secondary: 251, 146, 60; /* orange-400 */
+    --accent-tertiary: 253, 186, 116; /* orange-300 */
+    --border: 250, 235, 220;
 
     /* Liquid Glass tokens — light mode */
     --glass-bg: rgba(255, 255, 255, 0.45);
     --glass-border: rgba(255, 255, 255, 0.5);
     --glass-highlight: rgba(255, 255, 255, 0.7);
     --glass-shadow: rgba(0, 0, 0, 0.06);
-    --glass-text: rgba(0, 0, 0, 0.8);
-    --glass-text-muted: rgba(0, 0, 0, 0.45);
+    --glass-text: rgba(45, 25, 10, 0.8);
+    --glass-text-muted: rgba(45, 25, 10, 0.45);
   }
 
   .dark {
-    --background: 26, 22, 53; /* Deep dark purple for edges */
-    --background-secondary: 44, 35, 96; /* Lighter purple for gradient center */
-    --background-tertiary: 62, 54, 133;
+    --background: 15, 8, 5; /* Deep dark warm background */
+    --background-secondary: 25, 12, 5; 
+    --background-tertiary: 40, 18, 5;
     
     --text-primary: 255, 255, 255;
-    --text-secondary: 215, 215, 255;
-    --text-tertiary: 165, 165, 225;
+    --text-secondary: 255, 235, 215;
+    --text-tertiary: 225, 195, 165;
     
-    --accent: 142, 132, 240;
-    --accent-secondary: 165, 140, 255;
-    --accent-tertiary: 185, 165, 255;
-    --border: 62, 54, 133;
+    --accent: 234, 88, 12;      /* orange-600 */
+    --accent-secondary: 249, 115, 22; /* orange-500 */
+    --accent-tertiary: 251, 146, 60;  /* orange-400 */
+    --border: 40, 18, 5;
 
     /* Liquid Glass tokens — dark mode */
     --glass-bg: rgba(255, 255, 255, 0.06);
