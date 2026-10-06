@@ -51,19 +51,19 @@ export default function Hero({ profile }) {
       {/* Subtle Glowing Orbs */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
         <motion.div 
-          className="absolute w-[70vw] max-w-[700px] h-[70vh] max-h-[700px] rounded-[100%] blur-[120px]"
+          className="absolute w-[75vw] max-w-[800px] h-[75vh] max-h-[800px] rounded-[100%] blur-[100px]"
           style={{ 
-            x: mousePos.x * 1.5, 
-            y: mousePos.y * 1.5,
-            background: 'rgba(110, 70, 220, 0.12)',
+            x: mousePos.x * 2, 
+            y: mousePos.y * 2,
+            background: 'rgba(249, 115, 22, 0.15)',
           }}
         />
         <motion.div 
-          className="absolute w-[50vw] max-w-[500px] h-[50vh] max-h-[500px] rounded-[100%] blur-[100px] animate-blob animation-delay-2000 top-0 right-0 translate-x-1/4 -translate-y-1/4"
+          className="absolute w-[55vw] max-w-[600px] h-[55vh] max-h-[600px] rounded-[100%] blur-[90px] animate-blob animation-delay-2000 top-0 right-0 translate-x-1/4 -translate-y-1/4"
           style={{ 
-            x: mousePos.x * -1, 
-            y: mousePos.y * -1,
-            background: 'rgba(130, 80, 245, 0.1)',
+            x: mousePos.x * -1.5, 
+            y: mousePos.y * -1.5,
+            background: 'rgba(234, 88, 12, 0.15)',
           }}
         />
         <motion.div 
@@ -109,7 +109,14 @@ export default function Hero({ profile }) {
             <span className="block text-white">Crafting</span>
             <span className="block relative">
               <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400">Digital</span>
-              <span className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400 blur-[20px] opacity-50" aria-hidden="true">Digital</span>
+              <motion.span 
+                animate={{ opacity: [0.4, 0.8, 0.4], filter: ['blur(15px)', 'blur(25px)', 'blur(15px)'] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-400" 
+                aria-hidden="true"
+              >
+                Digital
+              </motion.span>
             </span>
             <span className="block text-white">Experiences<span className="text-orange-400 font-black">.</span></span>
           </motion.h1>
@@ -126,8 +133,8 @@ export default function Hero({ profile }) {
               className="group relative flex items-center gap-3 px-8 py-3.5 rounded-full font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-95 text-white"
               style={{
                 background: 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%)',
-                boxShadow: '0 0 25px rgba(124, 58, 237, 0.5), 0 8px 20px rgba(124, 58, 237, 0.3)',
-                border: '1px solid rgba(167, 139, 250, 0.4)',
+                boxShadow: '0 0 30px rgba(249, 115, 22, 0.5), 0 8px 20px rgba(249, 115, 22, 0.3)',
+                border: '1px solid rgba(253, 186, 116, 0.4)',
               }}
             >
               <span className="relative z-10 font-sans tracking-wide">Explore Projects</span>
@@ -142,7 +149,7 @@ export default function Hero({ profile }) {
               style={{
                 background: 'rgba(11, 5, 29, 0.6)',
                 border: '1px solid rgba(249, 115, 22, 0.3)',
-                boxShadow: '0 0 15px rgba(124, 58, 237, 0.1)',
+                boxShadow: '0 0 20px rgba(249, 115, 22, 0.15)',
               }}
             >
               <FiFileText size={18} className="text-orange-300" />
@@ -160,8 +167,8 @@ export default function Hero({ profile }) {
         >
           {/* 1. Main Profile Card (Spans 2 Rows) */}
           <motion.div 
-            className="col-span-1 row-span-2 p-6 rounded-3xl z-20 flex flex-col items-center justify-center gap-5 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
-            whileHover={{ y: -5 }}
+            className="col-span-1 row-span-2 p-6 rounded-3xl z-20 flex flex-col items-center justify-center gap-5 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 group"
+            whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             {/* Glass top reflection */}
@@ -184,8 +191,8 @@ export default function Hero({ profile }) {
 
           {/* 2. Repositories */}
           <motion.div 
-            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
-            whileHover={{ y: -5 }}
+            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)] hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 group"
+            whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -201,8 +208,8 @@ export default function Hero({ profile }) {
 
           {/* 3. Followers */}
           <motion.div 
-            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
-            whileHover={{ y: -5 }}
+            className="col-span-1 p-5 rounded-3xl z-10 flex flex-col justify-center gap-2 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)] hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 group"
+            whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -218,8 +225,8 @@ export default function Hero({ profile }) {
 
           {/* 4. Code Snippet (Spans 2 Columns) */}
           <motion.div 
-            className="col-span-2 p-6 rounded-3xl z-10 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
-            whileHover={{ y: -5 }}
+            className="col-span-2 p-6 rounded-3xl z-10 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 group"
+            whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />

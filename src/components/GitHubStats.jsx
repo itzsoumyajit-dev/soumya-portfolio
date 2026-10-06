@@ -78,8 +78,7 @@ export default function GitHubStats({ profile, repos }) {
               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -8, scale: 1.03 }}
-              className="rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center text-center group cursor-default relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+              className="rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center text-center group cursor-default relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_15px_40px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)] hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300"
             >
               <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
               <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/[0.07] to-transparent pointer-events-none" />
@@ -110,7 +109,8 @@ export default function GitHubStats({ profile, repos }) {
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-3xl p-8 md:p-10 flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
+          className="rounded-3xl p-8 md:p-10 flex flex-col items-center relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 group"
+          whileHover={{ y: -4 }}
         >
           {/* Glass top reflection */}
           <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
@@ -139,7 +139,7 @@ export default function GitHubStats({ profile, repos }) {
                 username={import.meta.env.VITE_GITHUB_USERNAME || 'itzsoumyajit-dev'}
                 colorScheme="dark"
                 theme={{
-                  dark: ['#0e0e16', '#6366f130', '#6366f160', '#6366f1a0', '#6366f1']
+                  dark: ['#0e0e16', '#f9731630', '#f9731660', '#f97316a0', '#f97316']
                 }}
                 fontSize={12}
                 blockSize={13}

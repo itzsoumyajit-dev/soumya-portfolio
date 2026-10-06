@@ -66,7 +66,7 @@ export default function Navbar({ scrollPct }) {
         defaultActiveIndex={activeIndex}
         iconContainerClassName="w-16 h-12"
         iconClassName="text-white"
-        className="glass-card shadow-2xl rounded-full"
+        className="glass-card shadow-[0_0_40px_rgba(249,115,22,0.15)] border border-orange-500/30 rounded-full backdrop-blur-xl"
       />
     </div>
   );

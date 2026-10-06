@@ -109,9 +109,9 @@ function RepoCard({ repo, delay, onClick }) {
       className="group cursor-pointer h-full"
     >
       <motion.div 
-        whileHover={{ y: -8, scale: 1.01 }}
+        whileHover={{ y: -8, scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="rounded-3xl p-6 md:p-8 h-full flex flex-col relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)]"
+        className="rounded-3xl p-6 md:p-8 h-full flex flex-col relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-300 group-hover:border-orange-500/60 group-hover:shadow-[0_20px_60px_rgba(249,115,22,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]"
       >
         {/* Glass top reflection */}
         <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />

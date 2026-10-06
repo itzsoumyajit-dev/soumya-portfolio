@@ -71,7 +71,7 @@ export default function Footer() {
                 rel="noreferrer" 
                 title={label}
                 whileHover={{ y: -3, scale: 1.1 }}
-                className="flex items-center justify-center w-10 h-10 rounded-full border border-orange-500/20 text-text-secondary hover:text-white hover:bg-orange-600/30 transition-all duration-300"
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-orange-500/20 text-text-secondary hover:text-white hover:bg-orange-600/30 hover:border-orange-500/50 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all duration-300"
               >
                 {icon}
               </motion.a>

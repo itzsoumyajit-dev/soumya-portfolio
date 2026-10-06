@@ -83,9 +83,9 @@ export default function CustomCursor() {
             y: tail.y,
             translateX: '-50%',
             translateY: '-50%',
-            backgroundColor: '#A58CFF',
+            backgroundColor: '#f97316',
             zIndex: tail.z,
-            boxShadow: `0 0 ${4 + i*2}px rgba(165, 140, 255, ${tail.opacity})`
+            boxShadow: `0 0 ${4 + i*2}px rgba(249, 115, 22, ${tail.opacity})`
           }}
           animate={{
             opacity: isVisible && !isHovering ? tail.opacity : 0,
@@ -107,9 +107,9 @@ export default function CustomCursor() {
         animate={{
           width: isHovering ? '48px' : '12px',
           height: isHovering ? '48px' : '12px',
-          backgroundColor: isHovering ? 'rgba(165, 140, 255, 0.15)' : '#fff',
-          border: isHovering ? '1.5px solid rgba(165, 140, 255, 0.8)' : '0px solid transparent',
-          boxShadow: isHovering ? 'none' : '0 0 20px 5px rgba(165, 140, 255, 0.9)',
+          backgroundColor: isHovering ? 'rgba(249, 115, 22, 0.15)' : '#fff',
+          border: isHovering ? '1.5px solid rgba(249, 115, 22, 0.8)' : '0px solid transparent',
+          boxShadow: isHovering ? 'none' : '0 0 20px 5px rgba(249, 115, 22, 0.9)',
           opacity: isVisible ? 1 : 0
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}

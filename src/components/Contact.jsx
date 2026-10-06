@@ -53,7 +53,7 @@ export default function Contact({ profile }) {
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-[#0f0803]/80 border border-orange-500/20 rounded-3xl p-8 md:p-10 flex flex-col"
+            className="bg-[#0f0803]/80 border border-orange-500/20 rounded-3xl p-8 md:p-10 flex flex-col hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4)] transition-all duration-300 group"
           >
             <h3 className="text-2xl font-medium text-white mb-1">Let's build something</h3>
             <h3 className="text-3xl font-bold text-orange-400 mb-6 font-display tracking-wide">amazing together</h3>
@@ -125,7 +125,7 @@ export default function Contact({ profile }) {
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-3xl p-8 md:p-10 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] flex flex-col"
+            className="rounded-3xl p-8 md:p-10 relative overflow-hidden bg-gradient-to-br from-orange-500/15 via-[#1a0f05]/40 to-orange-500/10 backdrop-blur-[60px] backdrop-saturate-200 border border-orange-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] flex flex-col hover:border-orange-500/60 hover:shadow-[0_20px_60px_rgba(249,115,22,0.4),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-300 group"
           >
             {/* Glass top reflection */}
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />

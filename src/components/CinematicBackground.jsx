@@ -1,5 +1,5 @@
 import { useScroll, useTransform, useSpring, motion } from 'framer-motion';
-import { BlackHoleHeroSection } from '@/components/ui/blackhole-hero-section';
+import DyeWhorl from '@/components/ui/dye-whorl';
 
 export default function CinematicBackground() {
   const { scrollY } = useScroll();
@@ -19,7 +19,7 @@ export default function CinematicBackground() {
   const opacity = useTransform(smoothScrollY, [0, 800], [1, 0.75]);
 
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden bg-black pointer-events-none">
+    <div className="fixed inset-0 z-[-1] overflow-hidden" style={{ backgroundColor: 'rgba(var(--background), 1)' }}>
       
       {/* Dynamic Master Layer */}
       <motion.div 
@@ -33,23 +33,17 @@ export default function CinematicBackground() {
           )
         }}
       >
-        <BlackHoleHeroSection 
+        <DyeWhorl
           className="w-full h-full"
-          focus={[0.5, 0.5]}
-          distance={20}
-          elevation={-5.5}
-          fov={50}
-          glow={1.2}
-          steps={250}
-          resolution={0.7}
-          orbitSpeed={0.01}
+          speed={1}
+          density={1}
+          stir={1}
         />
-        
-        {/* Ambient Purple Glow Overlays to keep the vibes */}
-        <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-orange-600/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] bg-amber-600/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none" />
-
       </motion.div>
+
+      {/* Warm ambient glow overlays */}
+      <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] rounded-full blur-[100px] mix-blend-screen pointer-events-none" style={{ backgroundColor: 'rgba(var(--accent), 0.12)' }} />
+      <div className="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] rounded-full blur-[90px] mix-blend-screen pointer-events-none" style={{ backgroundColor: 'rgba(var(--accent-secondary), 0.1)' }} />
     </div>
   );
 }

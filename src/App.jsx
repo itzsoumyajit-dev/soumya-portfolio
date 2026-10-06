@@ -417,9 +417,11 @@ export default function App() {
   useEffect(() => {
     if (showLoading || loading) return;
     const lenis = new Lenis({
-      lerp: 0.08,
+      lerp: 0.035,
       smoothWheel: true,
-      wheelMultiplier: 1,
+      wheelMultiplier: 0.8,
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
     function raf(time) {
       lenis.raf(time);

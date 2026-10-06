@@ -24,6 +24,9 @@
     --glass-shadow: rgba(0, 0, 0, 0.06);
     --glass-text: rgba(45, 25, 10, 0.8);
     --glass-text-muted: rgba(45, 25, 10, 0.45);
+    
+    --ns-muted: #4d4d4d;
+    --ns-accent: #006bff;
   }
 
   .dark {
@@ -47,6 +50,8 @@
     --glass-shadow: rgba(0, 0, 0, 0.3);
     --glass-text: rgba(255, 255, 255, 0.9);
     --glass-text-muted: rgba(255, 255, 255, 0.4);
+    
+    --ns-muted: #8f8f8f;
   }
 
   body {
