@@ -61,3 +61,5 @@ build_error.txt
 *.njsproj
 *.sln
 *.sw?
+
+/build_output
