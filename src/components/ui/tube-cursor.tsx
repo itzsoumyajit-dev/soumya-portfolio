@@ -39,6 +39,7 @@ const TubesCursor = ({
     (async () => {
       const mod = await import(
         /* webpackIgnore: true */
+        // @ts-ignore
         "https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js"
       );
       const TubesCursorCtor = (mod as any).default ?? mod;
